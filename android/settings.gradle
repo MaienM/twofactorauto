@@ -1,0 +1,3 @@
+rootProject.name = 'twofactorauto'
+
+include ':app'
