@@ -21,4 +21,5 @@ RUN echo 'y' | /opt/android-sdk/tools/bin/sdkmanager "platforms;android-23"
 RUN echo 'y' | /opt/android-sdk/tools/bin/sdkmanager "platform-tools"
 RUN echo 'y' | /opt/android-sdk/tools/bin/sdkmanager "extras;android;m2repository"
 
-ENV ANDROID_HOME=/opt/android-sdk
+ENV ANDROID_HOME /opt/android-sdk
+ENV PATH $ANDROID_HOME/platform-tools:$PATH
