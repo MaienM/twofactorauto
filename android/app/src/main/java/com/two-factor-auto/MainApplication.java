@@ -1,4 +1,4 @@
-package com.twofactorauto;
+package com.two-factor-auto;
 
 import android.app.Application;
 
