@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { Easing, Animated, StyleSheet, Text, View, ViewPropTypes } from 'react-native'
+import { Easing, Animated, Text, View, ViewPropTypes } from 'react-native'
 
 const propTypesView = (ViewPropTypes || View.propTypes);
 
@@ -26,16 +26,17 @@ const Circle = (props) => {
 
 Circle.propTypes = {
 	Component: PropTypes.func,
-	radius: PropTypes.number.isRequired,
-	thickness: PropTypes.number.isRequired,
-	color: PropTypes.string.isRequired,
+	radius: PropTypes.any.isRequired,
+	thickness: PropTypes.any.isRequired,
+	color: PropTypes.any.isRequired,
 	style: propTypesView.style,
-	children: propTypesView.children,
+	children: PropTypes.element,
 };
 
 Circle.defaultProps = {
 	Component: View,
 	style: {},
+	children: null,
 };
 
 // When rotate = 0deg, the right half of the circle will be filled
@@ -67,7 +68,7 @@ const HalfCircle = (props) => {
 
 HalfCircle.propTypes = {
 	...Circle.propTypes,
-	rotate: PropTypes.string,
+	rotate: PropTypes.any,
 };
 
 HalfCircle.defaultProps = {
