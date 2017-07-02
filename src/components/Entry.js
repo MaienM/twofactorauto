@@ -37,22 +37,25 @@ export default class Entry extends React.Component {
 		return (
 			<TouchableHighlight onPress={this.onPress} onLongPress={this.onLongPress}>
 				<View style={styles.container}>
-					<View>
-						<Text style={styles.header}>{this.props.name}</Text>
-						<Text style={styles.url}>{this.props.url}</Text>
+					<View style={styles.containerName}>
+						<Text style={styles.nameHeader}>{this.props.name}</Text>
+						<Text style={styles.nameUrl}>{this.props.url}</Text>
 					</View>
-					{this.state.code && <Text style={styles.code}>{this.state.code}</Text>}
 					{this.state.code && (
-						<CountdownCircle
-							duration={TIMEOUT}
-							radius={20}
-							thickness={5}
-							color="#93F"
-							textStyle={{
-								fontSize: 16,
-							}}
-							onFinish={this.onTimeElapsed}
-						/>
+						<View style={styles.containerCode}>
+							<Text style={styles.codeText}>
+								{this.state.code}
+							</Text>
+							<CountdownCircle
+								radius={20}
+								thickness={5}
+								color="#93F"
+								containerStyle={styles.codeTimer}
+								textStyle={styles.codeTimerText}
+								duration={TIMEOUT}
+								onFinish={this.onTimeElapsed}
+							/>
+						</View>
 					)}
 				</View>
 			</TouchableHighlight>
@@ -71,16 +74,31 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 
-	header: {
+	containerName: {
+	},
+
+	containerCode: {
+		flexDirection: 'row',
+	},
+
+	nameHeader: {
 		fontSize: 18,
 		fontWeight: 'bold',
 	},
 
-	url: {
+	nameUrl: {
 		fontStyle: 'italic',
 	},
 
-	code: {
+	codeText: {
 		fontSize: 28,
 	},
+
+	codeTimer: {
+		marginLeft: 10,
+	},
+
+	codeTimerText: {
+		fontSize: 16,
+	}
 });

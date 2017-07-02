@@ -112,11 +112,11 @@ export default class CountdownCircle extends React.Component {
 	}
 
 	render() {
-		const { duration, radius, thickness, color, offColor, innerColor, textStyle } = this.props;
+		const { duration, radius, thickness, color, offColor, containerStyle, textStyle } = this.props;
 		const { animation, timeout } = this.state;
 
 		return (
-			<View>
+			<View style={containerStyle}>
 				<Circle
 					radius={radius}
 					thickness={thickness}
@@ -158,6 +158,7 @@ CountdownCircle.propTypes = {
 	color: PropTypes.string,
 	offColor: PropTypes.string,
 	innerColor: PropTypes.string,
+	containerStyle: propTypesView.style,
 	textStyle: Text.propTypes.style,
 	onFinish: PropTypes.func,
 };
@@ -168,6 +169,7 @@ CountdownCircle.defaultProps = {
 	color: '#E9F',
 	offColor: '#999',
 	innerColor: '#FFF',
+	containerStyle: undefined,
 	textStyle: undefined,
 	onFinish: () => null,
 };
