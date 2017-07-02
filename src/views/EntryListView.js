@@ -2,12 +2,6 @@ import React from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import Entry from '../components/Entry';
 
-const styles = StyleSheet.create({
-	container: {
-		padding: 5,
-	},
-});
-
 export default class EntryListView extends React.Component {
 	render() {
 		return (
@@ -34,3 +28,10 @@ export default class EntryListView extends React.Component {
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+	container: {
+		padding: 5,
+	},
+});
+

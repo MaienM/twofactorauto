@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
 	},
 
 	codeTimer: {
-		marginLeft: 10,
+		marginLeft: 15,
 	},
 
 	codeTimerText: {
