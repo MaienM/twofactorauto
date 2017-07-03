@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, TouchableHighlight, View, Text } from 'react-native';
+import COLORS from 'flatui-colors';
 import CountdownCircle from './CountdownCircle';
 
 const TIMEOUT = 30;
@@ -49,7 +50,8 @@ export default class Entry extends React.Component {
 							<CountdownCircle
 								radius={20}
 								thickness={5}
-								color="#93F"
+								color={COLORS.WISTERIA}
+								offColor={COLORS.SILVER}
 								containerStyle={styles.codeTimer}
 								textStyle={styles.codeTimerText}
 								duration={TIMEOUT}
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
 		width: '100%',
 		margin: 1,
 		padding: 10,
-		backgroundColor: '#EEE',
+		backgroundColor: COLORS.CLOUDS,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
