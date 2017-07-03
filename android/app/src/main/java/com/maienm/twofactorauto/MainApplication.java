@@ -1,4 +1,4 @@
-package com.two-factor-auto;
+package com.maienm.twofactorauto;
 
 import android.app.Application;
 

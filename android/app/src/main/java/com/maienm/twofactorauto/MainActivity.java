@@ -1,4 +1,4 @@
-package com.two-factor-auto;
+package com.maienm.twofactorauto;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "two-factor-auto";
+        return "twofactorauto";
     }
 }
