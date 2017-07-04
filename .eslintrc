@@ -1,0 +1,20 @@
+{
+	'parser': 'babel-eslint',
+	'extends': 'airbnb',
+	'rules': {
+		// Tabs for indentation
+		'indent': ['error', 'tab'],
+		'no-tabs': 'off',
+		'react/jsx-indent': ['error', 'tab'],
+		'react/jsx-indent-props': ['error', 'tab'],
+
+		// More sensible max line length
+		'max-len': ['error', 120],
+
+		// Consistency, even if there is only one param
+		'arrow-parens': ['error', 'always'],
+
+		// Avoid directly mutating the state
+		'react/no-direct-mutation-state': 'error',
+	},
+}

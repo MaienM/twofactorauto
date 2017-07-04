@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
+import { Easing, Animated, Text, View, ViewPropTypes } from 'react-native';
 import PropTypes from 'prop-types';
-import { Easing, Animated, Text, View, ViewPropTypes } from 'react-native'
 
 const propTypesView = (ViewPropTypes || View.propTypes);
 
@@ -26,9 +26,18 @@ const Circle = (props) => {
 
 Circle.propTypes = {
 	Component: PropTypes.func,
-	radius: PropTypes.any.isRequired,
-	thickness: PropTypes.any.isRequired,
-	color: PropTypes.any.isRequired,
+	radius: PropTypes.oneOfType([
+		PropTypes.number,
+		PropTypes.object,
+	]).isRequired,
+	thickness: PropTypes.oneOfType([
+		PropTypes.number,
+		PropTypes.object,
+	]).isRequired,
+	color: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.object,
+	]).isRequired,
 	style: propTypesView.style,
 	children: PropTypes.element,
 };
@@ -42,7 +51,7 @@ Circle.defaultProps = {
 // When rotate = 0deg, the right half of the circle will be filled
 const HalfCircle = (props) => {
 	const { rotate, style, ...circleProps } = props;
-	const { Component, radius, thickness } = circleProps;
+	const { Component, radius } = circleProps;
 
 	return (
 		<Component
@@ -68,7 +77,10 @@ const HalfCircle = (props) => {
 
 HalfCircle.propTypes = {
 	...Circle.propTypes,
-	rotate: PropTypes.any,
+	rotate: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.object,
+	]).isRequired,
 };
 
 HalfCircle.defaultProps = {
@@ -89,15 +101,6 @@ export default class CountdownCircle extends React.Component {
 		this.onAnimationChange = this.onAnimationChange.bind(this);
 	}
 
-	onAnimationChange({ value }) {
-		const { duration } = this.props;
-
-		const timeout = Math.ceil(duration - (duration * value));
-		if (timeout < this.state.timeout) {
-			this.setState({ timeout });
-		}
-	}
-
 	componentWillMount() {
 		const { duration, onFinish } = this.props;
 		const { animation } = this.state;
@@ -112,8 +115,17 @@ export default class CountdownCircle extends React.Component {
 		}).start(onFinish);
 	}
 
+	onAnimationChange({ value }) {
+		const { duration } = this.props;
+
+		const timeout = Math.ceil(duration - (duration * value));
+		if (timeout < this.state.timeout) {
+			this.setState({ timeout });
+		}
+	}
+
 	render() {
-		const { duration, radius, thickness, color, offColor, containerStyle, textStyle } = this.props;
+		const { radius, thickness, color, offColor, containerStyle, textStyle } = this.props;
 		const { animation, timeout } = this.state;
 
 		return (
@@ -148,9 +160,9 @@ export default class CountdownCircle extends React.Component {
 					})}
 				/>
 			</View>
-		)
+		);
 	}
-};
+}
 
 CountdownCircle.propTypes = {
 	duration: PropTypes.number.isRequired,
@@ -158,7 +170,6 @@ CountdownCircle.propTypes = {
 	thickness: PropTypes.number,
 	color: PropTypes.string,
 	offColor: PropTypes.string,
-	innerColor: PropTypes.string,
 	containerStyle: propTypesView.style,
 	textStyle: Text.propTypes.style,
 	onFinish: PropTypes.func,
@@ -169,7 +180,6 @@ CountdownCircle.defaultProps = {
 	thickness: 3,
 	color: '#E9F',
 	offColor: '#999',
-	innerColor: '#FFF',
 	containerStyle: undefined,
 	textStyle: undefined,
 	onFinish: () => null,

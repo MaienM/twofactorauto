@@ -10,7 +10,7 @@ export class Normal {
 
 	static get(key) {
 		return AsyncStorage.getItem(`${NAMESPACE}:${key}`)
-			.then((val) => val === null ? undefined : val);
+			.then((val) => (val === null ? undefined : val));
 	}
 
 	static set(key, value) {
@@ -20,12 +20,12 @@ export class Normal {
 	static remove(key) {
 		return AsyncStorage.removeItem(`${NAMESPACE}:${key}`);
 	}
-};
+}
 
 export class Secure {
 	static get(key) {
 		return Keychain.getInternetCredentials(key)
-			.then((cred) => (cred && cred.password) ? JSON.parse(cred.password) : undefined);
+			.then((cred) => ((cred && cred.password) ? JSON.parse(cred.password) : undefined));
 	}
 
 	static set(key, value) {
@@ -37,5 +37,5 @@ export class Secure {
 		return Keychain.resetInternetCredentials(key)
 			.then(() => null);
 	}
-};
+}
 
