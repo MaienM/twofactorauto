@@ -2298,9 +2298,9 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-"flatui-colors@github:maienm/flatui-colors#patch-1":
-  version "1.0.2"
-  resolved "https://codeload.github.com/maienm/flatui-colors/tar.gz/78d5bc35c89ed5137bb33a39285cbc64e72f3a20"
+flatui-colors@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/flatui-colors/-/flatui-colors-1.0.3.tgz#6ba06fa8eb3e11ed0d25fcca529b3fc2fa023917"
 
 for-in@^1.0.1:
   version "1.0.2"
