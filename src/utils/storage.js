@@ -5,20 +5,24 @@ const NAMESPACE = 'com.maienm.twofactorauth@';
 
 export class Normal {
 	static list() {
-		return AsyncStorage.listAllKeys();
+		return AsyncStorage.listAllKeys()
+			.then((keys) => keys
+				.filter((k) => k.startsWith(NAMESPACE))
+				.map((k) => k.substr(NAMESPACE.length))
+			);
 	}
 
 	static get(key) {
-		return AsyncStorage.getItem(`${NAMESPACE}:${key}`)
-			.then((val) => (val === null ? undefined : val));
+		return AsyncStorage.getItem(`${NAMESPACE}${key}`)
+			.then((value) => (value === null ? undefined : value));
 	}
 
 	static set(key, value) {
-		return AsyncStorage.setItem(`${NAMESPACE}:${key}`, value);
+		return AsyncStorage.setItem(`${NAMESPACE}${key}`, value);
 	}
 
 	static remove(key) {
-		return AsyncStorage.removeItem(`${NAMESPACE}:${key}`);
+		return AsyncStorage.removeItem(`${NAMESPACE}${key}`);
 	}
 }
 
