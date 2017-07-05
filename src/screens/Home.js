@@ -2,53 +2,35 @@ import React from 'react';
 import { StyleSheet, View, TouchableHighlight, FlatList, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from 'flatui-colors';
+import { defaultNavigationOptions } from '../components/Header';
 import Entry from '../components/Entry';
 
 const styles = StyleSheet.create({
-	container: {},
-
-	navigation: {
-		height: 50,
-		backgroundColor: COLORS.PETER_RIVER,
-		padding: 10,
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-	},
-
-	navigationTitle: {
-		color: COLORS.CLOUDS,
-		fontSize: 20,
-	},
-
 	navigationButtons: {
-		justifyContent: 'flex-end',
-		flexDirection: 'row',
+		marginRight: 10,
+		// justifyContent: 'flex-end',
+		// flexDirection: 'row',
 	},
-
-	list: {},
 });
 
-export default class EntryListView extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this.onPressAdd = this.onPressAdd.bind(this);
-	}
-
-	onPressAdd() {
+export default class Home extends React.Component {
+	static navigationOptions({ navigation }) {
+		return {
+			...defaultNavigationOptions,
+			headerRight: (
+				<View style={styles.navigationButtons}>
+					<TouchableHighlight onPress={() => navigation.navigate('AddEntry')}>
+						<Icon name="add" size={40} color={COLORS.CLOUDS} />
+					</TouchableHighlight>
+				</View>
+			),
+		};
 	}
 
 	render() {
 		return (
 			<View style={styles.container}>
 				<View style={styles.navigation}>
-					<Text style={styles.navigationTitle}>Two Factor Auto</Text>
-					<View style={styles.navigationButtons}>
-						<TouchableHighlight onPress={this.onPressAdd}>
-							<Icon name="add" size={50} color={COLORS.CLOUDS} />
-						</TouchableHighlight>
-					</View>
 				</View>
 				<FlatList
 					style={styles.list}
