@@ -125,33 +125,6 @@ export default class Entry extends React.Component {
 	render() {
 		return (
 			<Swipeable
-				children={(
-					<TouchableHighlight onPress={this.state.opened ? undefined : this.onPress}>
-						<View style={[styles.baseItem, styles.container]}>
-							<View style={styles.containerName}>
-								<Text style={styles.nameHeader}>{this.props.name}</Text>
-								<Text style={styles.nameUrl}>{this.props.url}</Text>
-							</View>
-							{this.state.code && (
-								<View style={styles.containerCode}>
-									<Text style={styles.codeText}>
-										{this.state.code}
-									</Text>
-									<CountdownCircle
-										radius={20}
-										thickness={5}
-										color={COLORS.WISTERIA}
-										offColor={COLORS.SILVER}
-										containerStyle={styles.codeTimer}
-										textStyle={styles.codeTimerText}
-										duration={TIMEOUT}
-										onFinish={this.onTimeElapsed}
-									/>
-								</View>
-							)}
-						</View>
-					</TouchableHighlight>
-				)}
 				leftButtons={[
 					<MenuButton icon="edit" text="Edit" background={COLORS.EMERALD} />,
 					<MenuButton icon="delete" text="Delete" background={COLORS.ALIZARIN} />,
@@ -160,7 +133,33 @@ export default class Entry extends React.Component {
 				leftButtonWidth={70}
 				onLeftButtonsOpenComplete={() => this.setState({ opened: true })}
 				onLeftButtonsCloseComplete={() => this.setState({ opened: false })}
-			/>
+			>
+				<TouchableHighlight onPress={this.state.opened ? undefined : this.onPress}>
+					<View style={[styles.baseItem, styles.container]}>
+						<View style={styles.containerName}>
+							<Text style={styles.nameHeader}>{this.props.name}</Text>
+							<Text style={styles.nameUrl}>{this.props.url}</Text>
+						</View>
+						{this.state.code && (
+							<View style={styles.containerCode}>
+								<Text style={styles.codeText}>
+									{this.state.code}
+								</Text>
+								<CountdownCircle
+									radius={20}
+									thickness={5}
+									color={COLORS.WISTERIA}
+									offColor={COLORS.SILVER}
+									containerStyle={styles.codeTimer}
+									textStyle={styles.codeTimerText}
+									duration={TIMEOUT}
+									onFinish={this.onTimeElapsed}
+								/>
+							</View>
+						)}
+					</View>
+				</TouchableHighlight>
+			</Swipeable>
 		);
 	}
 }

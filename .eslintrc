@@ -16,5 +16,8 @@
 
 		// Avoid directly mutating the state
 		'react/no-direct-mutation-state': 'error',
+
+		// React native does not support .jsx
+		"react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
 	},
 }

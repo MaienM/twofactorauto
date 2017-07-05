@@ -6,10 +6,10 @@ const NAMESPACE = 'com.maienm.twofactorauth@';
 export class Normal {
 	static list() {
 		return AsyncStorage.listAllKeys()
-			.then((keys) => keys
+			.then((keys) => (keys
 				.filter((k) => k.startsWith(NAMESPACE))
 				.map((k) => k.substr(NAMESPACE.length))
-			);
+			));
 	}
 
 	static get(key) {
