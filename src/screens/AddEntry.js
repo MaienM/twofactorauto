@@ -1,17 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { defaultNavigationOptions } from '../components/Header';
+import withNavigation from '../components/Navigation';
 
 const styles = StyleSheet.create({
 });
 
-export default class Home extends React.Component {
-	static navigationOptions() {
-		return {
-			...defaultNavigationOptions,
-		};
-	}
-
+class AddEntry extends React.Component {
 	render() {
 		return (
 			<View>
@@ -21,3 +15,4 @@ export default class Home extends React.Component {
 	}
 }
 
+export default withNavigation(AddEntry);
