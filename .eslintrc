@@ -1,6 +1,9 @@
 {
 	'parser': 'babel-eslint',
 	'extends': 'airbnb',
+	'env': {
+		'jest': true,
+	},
 	'rules': {
 		// Tabs for indentation
 		'indent': ['error', 'tab'],
