@@ -20,6 +20,16 @@ const SECRET_SIZE = {
 	sha512: 64,
 };
 
+/**
+ * Implementation of RFC 4226 (HOTP: An HMAC-Based One-Time Password Algorithm)
+ *
+ * @param {object} options - The options
+ * @param {string|buffer} options.secret - The secret that is used to generate the token
+ * @param {number} options.counter - The OTP counter
+ * @param {string} options.algorithm - The algorithm to use. Default is sha1
+ * @param {number} options.length - The length of the generated token
+ * @return {string} - The generated token
+ */
 export default ({ secret, counter, algorithm = 'sha1', length, ...rest }) => {
 	if (!secret) {
 		throw new Error('Invalid secret');
