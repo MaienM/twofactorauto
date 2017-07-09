@@ -1,10 +1,15 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { FormLabel, FormInput } from 'react-native-elements';
+import { Button, FormLabel, FormInput } from 'react-native-elements';
+import COLORS from 'flatui-colors';
 import withNavigation from '../components/Navigation';
 
 const styles = StyleSheet.create({
 	container: {
+	},
+
+	button: {
+		marginTop: 10,
 	},
 });
 
@@ -18,8 +23,16 @@ class AddEntry extends React.Component {
 				<FormLabel>URL</FormLabel>
 				<FormInput onChangeText={this.onChangeURL} placeholder="URL" />
 
-				<FormLabel>Secret</FormLabel>
+				<FormLabel>Secret (base64 encoded)</FormLabel>
 				<FormInput onChangeText={this.onChangeSecret} placeholder="Secret" />
+
+				<Button
+					title="Save"
+					icon={{ name: 'save' }}
+					backgroundColor={COLORS.NEPHRITIS}
+					buttonStyle={styles.button}
+					large
+				/>
 			</View>
 		);
 	}
