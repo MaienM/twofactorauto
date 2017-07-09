@@ -32,15 +32,10 @@ const defaultNavigationOptions = {
 };
 
 export default (Component) => {
-	const WithNavigation = (props) => <Component {...props} />;
-	// class WithNavigation extends React.Component {
-	// 	render() {
-	// 		return <Component {...this.props} />;
-	// 	}
-	// }
-	setupHOC(Component, WithNavigation);
+	const withNavigation = (props) => <Component {...props} />;
+	setupHOC(Component, withNavigation);
 
-	WithNavigation.navigationOptions = (...args) => _.assignIn(
+	withNavigation.navigationOptions = (...args) => _.assignIn(
 		{},
 
 		// First apply the default navigation options
@@ -62,6 +57,6 @@ export default (Component) => {
 		},
 	);
 
-	return WithNavigation;
+	return withNavigation;
 };
 
