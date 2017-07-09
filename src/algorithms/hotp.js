@@ -1,5 +1,8 @@
 import _ from 'lodash';
 import { createHmac } from 'crypto';
+import * as buf from '../utils/buffer';
+
+/* eslint-disable no-bitwise */
 
 /**
  * Implementation of RFC 4226 (HOTP: An HMAC-Based One-Time Password Algorithm)
@@ -9,6 +12,13 @@ import { createHmac } from 'crypto';
  *   C:     counter
  *   Digit: length
  */
+
+// Depending on the used algorithm the secret should be of a certain size
+const SECRET_SIZE = {
+	sha1: 20,
+	sha256: 32,
+	sha512: 64,
+};
 
 export default ({ secret, counter, algorithm = 'sha1', length, ...rest }) => {
 	if (!secret) {
@@ -24,23 +34,34 @@ export default ({ secret, counter, algorithm = 'sha1', length, ...rest }) => {
 		throw new Error(`Unexpected options ${_.keys(rest)}`);
 	}
 
-	// Convert the inputs to buffers
-	const bSecret = new Buffer(secret);
-	const bCounter = new Buffer(_.padStart(counter.toString(16), 16, '0'), 'hex');
+	// Convert the secret to a buffer
+	let bSecret = buf.fromString(secret);
+
+	// If needed, repeat the secret buffer to be of the size expected by the hashing algorithm
+	const secretSize = SECRET_SIZE[algorithm.toLowerCase()];
+	if (secretSize) {
+		bSecret = buf.padEnd(bSecret, secretSize, bSecret);
+	} else {
+		console.warn(`Unknown algorithm ${algorithm}, this may not work as expected`); // eslint-disable-line no-console
+	}
+
+	// Convert the counter to an 8 byte buffer
+	const bCounter = buf.padStart(buf.fromInt(counter), 8);
 
 	// Create the HMAC hash
-	const hmac = createHmac(algorithm, bSecret).update(bCounter).digest('hex');
+	const bHmac = createHmac(algorithm, bSecret).update(bCounter).digest();
 
-	// Only part of the hash is used. The part to be used is determined by
-	// interpreting the last character of the hash as a hexadecimal number
-	const offset = parseInt(_.last(hmac), 16);
-	const truncated = hmac.substr(offset * 2, 8);
+	// Determine the offset of the part to be used by looking at the last 4 bits
+	const offset = _.last(bHmac) & 0x0F;
 
-	// Set the first (most significant) bit to 0
-	const sigbit = (parseInt(truncated, 16) & 0x7fffffff).toString(); // eslint-disable-line no-bitwise
+	// Get the part to use
+	const bToken = bHmac.slice(offset, offset + 4);
 
-	// Use the rightmost ${length} characters (taking care of the modulo part of
-	// the algorithm), 0 padding from the left if needed
-	return _.padStart(sigbit.substr(sigbit.length - length), length, '0');
+	// The leftmost (most significant) bit has to be ignored
+	bToken[0] &= 0x7F;
+
+	// To determine the token convert the token buffer to an integer, take the rightmost ${length} digits (effectively
+	// doing modulo 10^length), and finally pad with 0 from the left as needed
+	return _.padStart(buf.toInt(bToken).toString(10).substr(-length), length, '0');
 };
 
