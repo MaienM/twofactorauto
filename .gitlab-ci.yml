@@ -1,0 +1,24 @@
+# vi:ts=2:sw=2:sts=2:et
+
+stages:
+  - test
+
+cache:
+  key: "$CI_JOB_NAME"
+  paths:
+    - node_modules/
+
+eslint:
+  stage: test
+  image: node:alpine
+  script:
+    - yarn
+    - yarn run lint
+
+jest:
+  stage: test
+  image: node:alpine
+  script:
+    - yarn
+    - yarn run jest
+
