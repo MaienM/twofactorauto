@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import totp from './totp';
+import TOTP from './totp';
 
 // Test cases defined in the RFC
 const rfcTestCases = [
@@ -25,15 +25,14 @@ const rfcTestCases = [
 	['SHA512', new Date(Date.parse('2603-10-11T11:33:20Z')), '47863826'],
 	/* eslint-enable */
 ];
-_.each(rfcTestCases, ([algorithm, time, expected]) => {
-	test(`RFC testcase for ${algorithm} at ${time.toGMTString()}`, () => {
-		const actual = totp({
+_.each(rfcTestCases, ([algorithm, timestamp, expected]) => {
+	test(`RFC testcase for ${algorithm} at ${timestamp.toGMTString()}`, () => {
+		const totp = new TOTP({
 			secret: '12345678901234567890',
 			algorithm,
 			length: 8,
-			timestamp: time,
 		});
-		expect(actual).toBe(expected);
+		expect(totp.generate({ timestamp })).toBe(expected);
 	});
 });
 

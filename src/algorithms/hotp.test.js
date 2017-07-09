@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import hotp from './hotp';
+import HOTP from './hotp';
 
 // Test cases defined in the RFC
 const rfcTestCases = [
@@ -17,11 +17,10 @@ const rfcTestCases = [
 ];
 _.each(rfcTestCases, ([counter, expected]) => {
 	test(`RFC testcase for count ${counter}`, () => {
-		const actual = hotp({
+		const hotp = new HOTP({
 			secret: '12345678901234567890',
-			counter,
 			length: 6,
 		});
-		expect(actual).toBe(expected);
+		expect(hotp.generate({ counter })).toBe(expected);
 	});
 });
