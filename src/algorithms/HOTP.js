@@ -28,27 +28,32 @@ export default class HOTP extends Algorithm {
 	 * @param {string} options.algorithm - The algorithm to use. Default is sha1
 	 * @param {number} options.length - The length of the generated token
 	 */
-	constructor({ secret, algorithm = 'sha1', length, ...rest }) {
+	constructor({ secret, counter, algorithm = 'sha1', length, ...rest }) {
 		super(rest);
 		rejectExtra(rest);
 		if (!secret) {
 			throw new Error('Invalid secret');
+		}
+		if (!_.isNumber(counter) || counter < 0) {
+			throw new Error(`Invalid counter ${counter}`);
 		}
 		if (!_.isNumber(length) || length < 1) {
 			throw new Error(`Invalid length ${length}`);
 		}
 
 		this.secret = secret;
+		this.counter = counter;
 		this.algorithm = algorithm;
 		this.length = length;
 	}
 
 	/**
 	 * @param {object} options - The options
-	 * @param {number} options.counter - The OTP counter
+	 * @param {number} options.counter - The OTP counter. If not specified, the one passed to the constructor will be
+	 *   used and incremented
 	 * @return {string} - The generated token
 	 */
-	generate({ counter, ...rest }) {
+	generate({ counter = this.counter++, ...rest } = {}) {
 		if (!_.isNumber(counter) || counter < 0) {
 			throw new Error(`Invalid counter ${counter}`);
 		}
@@ -84,6 +89,15 @@ export default class HOTP extends Algorithm {
 		// To determine the token convert the token buffer to an integer, take the rightmost ${length} digits
 		// (effectively doing modulo 10^length), and finally pad with 0 from the left as needed
 		return _.padStart(buf.toInt(bToken).toString(10).substr(-this.length), this.length, '0');
+	}
+
+	persist() {
+		return {
+			secret: this.secret,
+			counter: this.counter,
+			algorithm: this.algorithm,
+			length: this.length,
+		};
 	}
 }
 

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { rejectExtra } from './base';
-import HOTP from './hotp';
+import HOTP from './HOTP';
 
 /**
  * Implementation of RFC 6238 (TOTP: Time-Based One-Time Password Algorithm).
@@ -21,7 +21,7 @@ export default class TOTP extends HOTP {
 	 * @param {number} options.length - The length of the generated token
 	 */
 	constructor({ secret, tStart = 0, tInterval = 30, algorithm, length, ...rest }) {
-		super({ secret, algorithm, length });
+		super({ secret, algorithm, length, counter: 0 });
 		rejectExtra(rest);
 		if (!_.isNumber(tStart)) {
 			throw new Error(`Invalid tStart ${tStart}`);
@@ -39,7 +39,7 @@ export default class TOTP extends HOTP {
 	 * @param {number} options.timestamp - The timestamp to generate a token for. Default is the current timestamp
 	 * @return {string} - The generated token
 	 */
-	generate({ timestamp = Date.now(), ...rest }) {
+	generate({ timestamp = Date.now(), ...rest } = {}) {
 		rejectExtra(rest);
 		if (!_.isNumber(timestamp) && !_.isDate(timestamp)) {
 			throw new Error(`Invalid timestamp ${timestamp}`);
@@ -47,6 +47,10 @@ export default class TOTP extends HOTP {
 
 		const counter = Math.floor(((timestamp / 1000) - this.tStart) / this.tInterval);
 		return super.generate({ counter });
+	}
+
+	persist() {
+		return _.omit(super.persist(), 'counter');
 	}
 }
 

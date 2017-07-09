@@ -1,7 +1,9 @@
 import _ from 'lodash';
-import TOTP from './totp';
+import TOTP from './TOTP';
 
 // Test cases defined in the RFC
+const secret = '12345678901234567890';
+const length = 8;
 const rfcTestCases = [
 	/* eslint-disable no-multi-spaces */
 	// hash,   time,                                        expected
@@ -27,12 +29,15 @@ const rfcTestCases = [
 ];
 _.each(rfcTestCases, ([algorithm, timestamp, expected]) => {
 	test(`RFC testcase for ${algorithm} at ${timestamp.toGMTString()}`, () => {
-		const totp = new TOTP({
-			secret: '12345678901234567890',
-			algorithm,
-			length: 8,
-		});
+		const totp = new TOTP({ secret, algorithm, length });
 		expect(totp.generate({ timestamp })).toBe(expected);
 	});
 });
 
+test("persist's output can be used to create a new instance", () => {
+	const totp = new TOTP({ secret, length });
+	totp.generate();
+	const persisted = totp.persist();
+	const totp2 = new TOTP(persisted);
+	expect(totp2.generate()).toBe(totp.generate());
+});

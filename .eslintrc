@@ -21,6 +21,10 @@
 		'react/no-direct-mutation-state': 'error',
 
 		// React native does not support .jsx
-		"react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
+		'react/jsx-filename-extension': ['error', { 'extensions': ['.js', '.jsx'] }],
+
+		// I have seen no arguments against use of ++ that don't boil down to "understand what an operator does before you
+		// use it"
+		'no-plusplus': 'off',
 	},
 }
