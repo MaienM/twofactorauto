@@ -17,11 +17,11 @@ export default class TOTP extends HOTP {
 	 * @param {string|buffer} options.secret - The secret that is used to generate the token
 	 * @param {number} options.tStart - The timestamp to start counting at. Default is epoch (0)
 	 * @param {number} options.tInterval - The time step in seconds. Default is 30
-	 * @param {string} options.algorithm - The algorithm to use. Default is sha1
+	 * @param {string} options.digest - The digest algorithm to use. Default is sha1
 	 * @param {number} options.length - The length of the generated token
 	 */
-	constructor({ secret, tStart = 0, tInterval = 30, algorithm, length, ...rest }) {
-		super({ secret, algorithm, length, counter: 0 });
+	constructor({ secret, tStart = 0, tInterval = 30, digest, length, ...rest }) {
+		super({ secret, digest, length, counter: 0 });
 		rejectExtra(rest);
 		if (!_.isNumber(tStart)) {
 			throw new Error(`Invalid tStart ${tStart}`);

@@ -27,9 +27,9 @@ const rfcTestCases = [
 	['SHA512', new Date(Date.parse('2603-10-11T11:33:20Z')), '47863826'],
 	/* eslint-enable */
 ];
-_.each(rfcTestCases, ([algorithm, timestamp, expected]) => {
-	test(`RFC testcase for ${algorithm} at ${timestamp.toGMTString()}`, () => {
-		const totp = new TOTP({ secret, algorithm, length });
+_.each(rfcTestCases, ([digest, timestamp, expected]) => {
+	test(`RFC testcase for ${digest} at ${timestamp.toGMTString()}`, () => {
+		const totp = new TOTP({ secret, digest, length });
 		expect(totp.generate({ timestamp })).toBe(expected);
 	});
 });

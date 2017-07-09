@@ -14,7 +14,7 @@ import * as buf from '../utils/buffer';
  *   Digit: length
  */
 export default class HOTP extends Algorithm {
-	// Depending on the used algorithm the secret should be of a certain size
+	// Depending on the used digest method the secret should be of a certain size
 	static SECRET_SIZE = {
 		sha1: 20,
 		sha256: 32,
@@ -25,10 +25,10 @@ export default class HOTP extends Algorithm {
 	 * @param {object} options - The options
 	 * @param {string|buffer} options.secret - The secret that is used to generate the token
 	 * @param {number} options.counter - The OTP counter
-	 * @param {string} options.algorithm - The algorithm to use. Default is sha1
+	 * @param {string} options.digest - The digest algorithm to use. Default is sha1
 	 * @param {number} options.length - The length of the generated token
 	 */
-	constructor({ secret, counter, algorithm = 'sha1', length, ...rest }) {
+	constructor({ secret, counter, digest = 'sha1', length, ...rest }) {
 		super(rest);
 		rejectExtra(rest);
 		if (!secret) {
@@ -43,7 +43,7 @@ export default class HOTP extends Algorithm {
 
 		this.secret = secret;
 		this.counter = counter;
-		this.algorithm = algorithm;
+		this.digest = digest;
 		this.length = length;
 	}
 
@@ -62,20 +62,20 @@ export default class HOTP extends Algorithm {
 		// Convert the secret to a buffer
 		let bSecret = buf.fromString(this.secret);
 
-		// If needed, repeat the secret buffer to be of the size expected by the hashing algorithm
-		const secretSize = HOTP.SECRET_SIZE[this.algorithm.toLowerCase()];
+		// If needed, repeat the secret buffer to be of the size expected by the digest algorithm
+		const secretSize = HOTP.SECRET_SIZE[this.digest.toLowerCase()];
 		if (secretSize) {
 			bSecret = buf.padEnd(bSecret, secretSize, bSecret);
 		} else {
 			// eslint-disable-next-line no-console
-			console.warn(`Unknown algorithm ${this.algorithm}, this may not work as expected`);
+			console.warn(`Unknown digest ${this.digest}, this may not work as expected`);
 		}
 
 		// Convert the counter to an 8 byte buffer
 		const bCounter = buf.padStart(buf.fromInt(counter), 8);
 
 		// Create the HMAC hash
-		const bHmac = createHmac(this.algorithm, bSecret).update(bCounter).digest();
+		const bHmac = createHmac(this.digest, bSecret).update(bCounter).digest();
 
 		// Determine the offset of the part to be used by looking at the last 4 bits
 		const offset = _.last(bHmac) & 0x0F;
@@ -95,7 +95,7 @@ export default class HOTP extends Algorithm {
 		return {
 			secret: this.secret,
 			counter: this.counter,
-			algorithm: this.algorithm,
+			digest: this.digest,
 			length: this.length,
 		};
 	}
