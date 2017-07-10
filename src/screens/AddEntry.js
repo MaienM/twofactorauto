@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import { Button, FormLabel, FormInput } from 'react-native-elements';
 import COLORS from 'flatui-colors';
 import FormInputPicker from '../components/FormInputPicker';
-import FormValidation from '../components/FormValidation';
 import withNavigation from '../components/Navigation';
 import * as buf from '../utils/buffer';
+import { validate, resetValidation, isValid } from '../utils/validate';
 
 const styles = StyleSheet.create({
 	container: {
@@ -58,8 +58,9 @@ class AddEntry extends React.Component {
 	}
 
 	render() {
+		resetValidation();
 		return (
-			<View style={styles.container}>
+			<ScrollView style={styles.container}>
 				<FormLabel>Name</FormLabel>
 				<FormInput
 					onChangeText={this.onChangeName}
@@ -67,7 +68,7 @@ class AddEntry extends React.Component {
 					placeholder="Name"
 					returnKeyType="next"
 				/>
-				<FormValidation>{[!this.state.name && 'Cannot be empty']}</FormValidation>
+				{validate(!this.state.name && 'Cannot be empty')}
 
 				<FormLabel>Service</FormLabel>
 				<FormInput
@@ -76,7 +77,7 @@ class AddEntry extends React.Component {
 					placeholder="Service"
 					returnKeyType="next"
 				/>
-				<FormValidation>{[!this.state.service && 'Cannot be empty']}</FormValidation>
+				{validate(!this.state.service && 'Cannot be empty')}
 
 				<FormLabel>Algorithm</FormLabel>
 				<FormInputPicker onValueChange={this.onChangeAlgorithm} value={this.state.algorithm}>
@@ -84,7 +85,7 @@ class AddEntry extends React.Component {
 					<FormInputPicker.Item label="HOTP" value="hotp" />
 					<FormInputPicker.Item label="TOTP" value="totp" />
 				</FormInputPicker>
-				<FormValidation>{[!this.state.algorithm && 'Cannot be empty']}</FormValidation>
+				{validate(!this.state.algorithm && 'Cannot be empty')}
 
 				<FormLabel>Secret (base64 encoded)</FormLabel>
 				<FormInput
@@ -92,10 +93,10 @@ class AddEntry extends React.Component {
 					value={this.state.secret}
 					placeholder="Secret"
 				/>
-				<FormValidation>{[
+				{validate(
 					!this.state.secret && 'Cannot be empty',
 					!buf.fromBase64(this.state.secret) && 'Must be a valid base64 encoded string',
-				]}</FormValidation>
+				)}
 
 				<Button
 					onPress={this.onPressSave}
@@ -103,9 +104,10 @@ class AddEntry extends React.Component {
 					icon={{ name: 'save' }}
 					backgroundColor={COLORS.NEPHRITIS}
 					buttonStyle={styles.button}
+					disabled={!isValid()}
 					large
 				/>
-			</View>
+			</ScrollView>
 		);
 	}
 }
