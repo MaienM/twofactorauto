@@ -5,7 +5,7 @@ const NAMESPACE = 'com.maienm.twofactorauth@';
 
 export class Normal {
 	static list() {
-		return AsyncStorage.listAllKeys()
+		return AsyncStorage.getAllKeys()
 			.then((keys) => (keys
 				.filter((k) => k.startsWith(NAMESPACE))
 				.map((k) => k.substr(NAMESPACE.length))
@@ -26,19 +26,31 @@ export class Normal {
 	}
 }
 
+const unpackCredentials = (cred, def) => ((cred && cred.password) ? JSON.parse(cred.password) : def);
+const getList = () => Keychain.getGenericPassword().then((cred) => unpackCredentials(cred, []));
+const setList = (list) => Keychain.setGenericPassword('list', JSON.stringify(list));
+
 export class Secure {
+	static list() {
+		return getList();
+	}
+
 	static get(key) {
 		return Keychain.getInternetCredentials(key)
-			.then((cred) => ((cred && cred.password) ? JSON.parse(cred.password) : undefined));
+			.then((cred) => unpackCredentials(cred));
 	}
 
 	static set(key, value) {
-		return Keychain.setInternetCredentials(key, 'secret', JSON.stringify(value))
+		return getList()
+			.then((list) => setList(list.concat([key])))
+			.then(() => Keychain.setInternetCredentials(key, 'secret', JSON.stringify(value)))
 			.then(() => null);
 	}
 
 	static remove(key) {
-		return Keychain.resetInternetCredentials(key)
+		return getList()
+			.then((list) => setList(list.filter((k) => k !== key)))
+			.then(() => Keychain.resetInternetCredentials(key))
 			.then(() => null);
 	}
 }
