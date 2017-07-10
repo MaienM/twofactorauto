@@ -25,13 +25,13 @@ class AddEntry extends React.Component {
 
 		this.state = {
 			name: '',
-			url: '',
+			service: '',
 			algorithm: null,
 			secret: '',
 		};
 
 		this.onChangeName = this.onChangeName.bind(this);
-		this.onChangeURL = this.onChangeURL.bind(this);
+		this.onChangeService = this.onChangeService.bind(this);
 		this.onChangeAlgorithm = this.onChangeAlgorithm.bind(this);
 		this.onChangeSecret = this.onChangeSecret.bind(this);
 		this.onPressSave = this.onPressSave.bind(this);
@@ -41,8 +41,8 @@ class AddEntry extends React.Component {
 		this.setState({ name });
 	}
 
-	onChangeURL(url) {
-		this.setState({ url });
+	onChangeService(service) {
+		this.setState({ service });
 	}
 
 	onChangeAlgorithm(algorithm) {
@@ -69,14 +69,14 @@ class AddEntry extends React.Component {
 				/>
 				<FormValidation>{[!this.state.name && 'Cannot be empty']}</FormValidation>
 
-				<FormLabel>URL</FormLabel>
+				<FormLabel>Service</FormLabel>
 				<FormInput
-					onChangeText={this.onChangeURL}
-					value={this.state.url}
-					placeholder="URL"
+					onChangeText={this.onChangeService}
+					value={this.state.service}
+					placeholder="Service"
 					returnKeyType="next"
 				/>
-				<FormValidation>{[!this.state.url && 'Cannot be empty']}</FormValidation>
+				<FormValidation>{[!this.state.service && 'Cannot be empty']}</FormValidation>
 
 				<FormLabel>Algorithm</FormLabel>
 				<FormInputPicker onValueChange={this.onChangeAlgorithm} value={this.state.algorithm}>

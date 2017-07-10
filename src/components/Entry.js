@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 	},
 
-	nameUrl: {
+	nameService: {
 		fontStyle: 'italic',
 	},
 
@@ -138,7 +138,7 @@ export default class Entry extends React.Component {
 					<View style={[styles.baseItem, styles.container]}>
 						<View style={styles.containerName}>
 							<Text style={styles.nameHeader}>{this.props.name}</Text>
-							<Text style={styles.nameUrl}>{this.props.url}</Text>
+							<Text style={styles.nameService}>{this.props.service}</Text>
 						</View>
 						{this.state.code && (
 							<View style={styles.containerCode}>
@@ -166,6 +166,6 @@ export default class Entry extends React.Component {
 
 Entry.propTypes = {
 	name: PropTypes.string.isRequired,
-	url: PropTypes.string.isRequired,
+	service: PropTypes.string.isRequired,
 };
 

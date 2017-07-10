@@ -18,21 +18,21 @@ class Home extends React.Component {
 		return (
 			<FlatList
 				data={[
-					{ key: 0, name: 'Google', url: 'google.com' },
-					{ key: 1, name: 'Github', url: 'github.com' },
-					{ key: 2, name: 'Gitlab', url: 'gitlab.org' },
-					{ key: 3, name: 'Google', url: 'google.com' },
-					{ key: 4, name: 'Github', url: 'github.com' },
-					{ key: 5, name: 'Gitlab', url: 'gitlab.org' },
-					{ key: 6, name: 'Google', url: 'google.com' },
-					{ key: 7, name: 'Github', url: 'github.com' },
-					{ key: 8, name: 'Gitlab', url: 'gitlab.org' },
-					{ key: 9, name: 'Google', url: 'google.com' },
-					{ key: 10, name: 'Github', url: 'github.com' },
-					{ key: 11, name: 'Gitlab', url: 'gitlab.org' },
-					{ key: 12, name: 'Google', url: 'google.com' },
-					{ key: 13, name: 'Github', url: 'github.com' },
-					{ key: 14, name: 'Gitlab', url: 'gitlab.org' },
+					{ key: 0, name: 'Google', service: 'google.com' },
+					{ key: 1, name: 'Github', service: 'github.com' },
+					{ key: 2, name: 'Gitlab', service: 'gitlab.org' },
+					{ key: 3, name: 'Google', service: 'google.com' },
+					{ key: 4, name: 'Github', service: 'github.com' },
+					{ key: 5, name: 'Gitlab', service: 'gitlab.org' },
+					{ key: 6, name: 'Google', service: 'google.com' },
+					{ key: 7, name: 'Github', service: 'github.com' },
+					{ key: 8, name: 'Gitlab', service: 'gitlab.org' },
+					{ key: 9, name: 'Google', service: 'google.com' },
+					{ key: 10, name: 'Github', service: 'github.com' },
+					{ key: 11, name: 'Gitlab', service: 'gitlab.org' },
+					{ key: 12, name: 'Google', service: 'google.com' },
+					{ key: 13, name: 'Github', service: 'github.com' },
+					{ key: 14, name: 'Gitlab', service: 'gitlab.org' },
 				]}
 				renderItem={({ item }) => <Entry {...item} />}
 			/>
