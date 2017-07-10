@@ -33,6 +33,22 @@ test('fromInt should work for a multi byte number', () => {
 });
 
 /**
+ * fromInt
+ */
+
+test('fromBase64 should work for a valid base64 encoded string', () => {
+	expect([...buf.fromBase64('test')]).toEqual([181, 235, 45]);
+});
+
+test('fromBase64 should not work for an invalid base64 encoded string', () => {
+	expect(buf.fromBase64('testt')).toEqual(null);
+});
+
+test('fromBase64 should not work for a string with invalid characters', () => {
+	expect(buf.fromBase64('"')).toEqual(null);
+});
+
+/**
  * toHex
  */
 

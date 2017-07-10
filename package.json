@@ -11,6 +11,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
+    "buffer": "^5.0.6",
     "color": "^2.0.0",
     "flatui-colors": "^1.0.3",
     "lodash": "^4.17.4",
