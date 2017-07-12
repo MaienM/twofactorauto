@@ -3,7 +3,7 @@ import { StackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { persistStore, autoRehydrate } from 'redux-persist';
+import { persistStore, autoRehydrate, toReduxPersistStorage } from './utils/persist';
 import * as storage from './utils/storage';
 import rootReducer from './reducers';
 import Home from './screens/Home';
@@ -20,28 +20,17 @@ const store = createStore(
 );
 
 // Add the storage backends
-const toReduxPersistStorage = (sClass) => {
-	const handleCallback = (callback) => ([
-		(data) => callback(null, data),
-		(error) => callback(error, null),
-	]);
-	return {
-		getAllKeys: (callback) => sClass.list().then(...handleCallback(callback)),
-		getItem: (key, callback) => sClass.get(key).then(...handleCallback(callback)),
-		setItem: (key, value, callback) => sClass.set(key, value).then(...handleCallback(callback)),
-		removeItem: (key, callback) => sClass.remove(key).then(...handleCallback(callback)),
-	};
-}
 const TRANSIENT_STORES = [];
 const SECURE_STORES = ['secrets'];
-persistStore(store, {
-	blacklist: [...TRANSIENT_STORES, ...SECURE_STORES],
-	storage: toReduxPersistStorage(storage.Normal),
-});
-persistStore(store, {
-	whitelist: SECURE_STORES,
-	storage: toReduxPersistStorage(storage.Secure),
-});
+persistStore(store, [
+	{
+		blacklist: [...TRANSIENT_STORES, ...SECURE_STORES],
+		storage: toReduxPersistStorage(storage.Normal),
+	}, {
+		whitelist: SECURE_STORES,
+		storage: toReduxPersistStorage(storage.Secure),
+	},
+]);
 
 // Setup the navigator
 const Navigator = StackNavigator({

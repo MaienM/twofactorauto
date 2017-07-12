@@ -51,7 +51,7 @@ jest.mock('react-native-keychain', () => {
 	};
 });
 
-_(storage).each((sClass, key) => {
+_(storage).pick(['Normal', 'Secure']).each((sClass, key) => {
 	test(`${key}.list returns an empty list when the store is empty`, () => (
 		sClass.list()
 			.then((list) => expect(list).toEqual([]))

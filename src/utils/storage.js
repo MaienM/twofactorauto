@@ -55,3 +55,17 @@ export class Secure {
 	}
 }
 
+export const withLogging = (sClass) => {
+	const logResult = (name, ...args) => (data) => {
+		// eslint-disable-next-line no-console
+		console.debug(`${sClass.name}.${name}(${args.map(JSON.stringify).join(', ')})`, data);
+		return data;
+	};
+	return {
+		list: (...args) => sClass.list(...args).then(logResult('list', ...args)),
+		get: (...args) => sClass.get(...args).then(logResult('get', ...args)),
+		set: (...args) => sClass.set(...args).then(logResult('set', ...args)),
+		remove: (...args) => sClass.remove(...args).then(logResult('remove', ...args)),
+	};
+};
+
