@@ -23,6 +23,9 @@ config.rules['max-len'][1] = 120;
 // Consistency, even if there is only one param
 config.rules['arrow-parens'][1] = 'always';
 
+// Spacing is fine, but don't overdo it
+config.rules['no-multiple-empty-lines'][1]['max'] = 1;
+
 // I have seen no arguments against use of ++ that don't boil down to "understand what an operator does before using it"
 config.rules['no-plusplus'] = 'off';
 
