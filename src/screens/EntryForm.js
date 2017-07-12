@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { Button, FormLabel, FormInput } from 'react-native-elements';
+import PropTypes from 'prop-types';
 import COLORS from 'flatui-colors';
 import FormInputPicker from '../components/FormInputPicker';
 import withNavigation from '../components/Navigation';
@@ -16,10 +17,7 @@ const styles = StyleSheet.create({
 	},
 });
 
-const BASE64_CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-const REGEX_STRIP_BASE64 = new RegExp(`[^${BASE64_CHARACTERS}]`, 'g');
-
-class AddEntry extends React.Component {
+class EntryForm extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -46,7 +44,7 @@ class AddEntry extends React.Component {
 	}
 
 	onChangeAlgorithm(algorithm) {
-		this.setState({ algorithm: algorithm.replace(REGEX_STRIP_BASE64, '') });
+		this.setState({ algorithm });
 	}
 
 	onChangeSecret(secret) {
@@ -54,7 +52,16 @@ class AddEntry extends React.Component {
 	}
 
 	onPressSave() {
-		console.log(this.state);
+		this.props.onSave({
+			entry: {
+				name: this.state.name,
+				service: this.state.service,
+				algorithm: this.state.algorithm,
+			},
+			secrets: {
+				secret: this.state.secret,
+			},
+		});
 	}
 
 	render() {
@@ -112,4 +119,8 @@ class AddEntry extends React.Component {
 	}
 }
 
-export default withNavigation(AddEntry);
+EntryForm.propTypes = {
+	onSave: PropTypes.func.isRequired,
+};
+
+export default withNavigation(EntryForm);

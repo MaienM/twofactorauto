@@ -2,10 +2,14 @@ import React from 'react';
 import { StyleSheet, TouchableHighlight, View, Text } from 'react-native';
 import Swipeable from 'react-native-swipeable';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import COLORS from 'flatui-colors';
+import { updateEntry } from '../actions/entries';
 import { getComplementary } from '../utils/colors';
 import CountdownCircle from './CountdownCircle';
+import algorithms from '../algorithms';
 
 const TIMEOUT = 30;
 
@@ -98,7 +102,7 @@ MenuButton.defaultProps = {
 	onPress: undefined,
 };
 
-export default class Entry extends React.Component {
+class Entry extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -111,9 +115,12 @@ export default class Entry extends React.Component {
 	}
 
 	onPress() {
+		const Algorithm = algorithms[this.props.entry.algorithm.toLowerCase()];
+		const algorithm = new Algorithm(this.props.secrets);
 		this.setState({
-			code: 'ABCD1234',
+			code: algorithm.generate(),
 		});
+		this.props.onUpdateSecrets(algorithm.persist());
 	}
 
 	onTimeElapsed() {
@@ -137,8 +144,8 @@ export default class Entry extends React.Component {
 				<TouchableHighlight onPress={this.state.opened ? undefined : this.onPress}>
 					<View style={[styles.baseItem, styles.container]}>
 						<View style={styles.containerName}>
-							<Text style={styles.nameHeader}>{this.props.name}</Text>
-							<Text style={styles.nameService}>{this.props.service}</Text>
+							<Text style={styles.nameHeader}>{this.props.entry.name}</Text>
+							<Text style={styles.nameService}>{this.props.entry.service}</Text>
 						</View>
 						{this.state.code && (
 							<View style={styles.containerCode}>
@@ -165,7 +172,27 @@ export default class Entry extends React.Component {
 }
 
 Entry.propTypes = {
-	name: PropTypes.string.isRequired,
-	service: PropTypes.string.isRequired,
+	uuid: PropTypes.string.isRequired, // eslint-disable-line
+	entry: PropTypes.shape({
+		name: PropTypes.string.isRequired,
+		service: PropTypes.string.isRequired,
+		algorithm: PropTypes.oneOf(_.keys(algorithms)).isRequired,
+	}).isRequired,
+	secrets: PropTypes.object.isRequired, // eslint-disable-line
+	onUpdateSecrets: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = (state, ownProps) => ({
+	entry: state.entries[ownProps.uuid],
+	secrets: state.secrets[ownProps.uuid],
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	onUpdateSecrets: (secrets) => dispatch(updateEntry({
+		uuid: ownProps.uuid,
+		secrets,
+	})),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Entry);
 

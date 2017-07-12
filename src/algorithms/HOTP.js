@@ -26,9 +26,9 @@ export default class HOTP extends Algorithm {
 	 * @param {string|buffer} options.secret - The secret that is used to generate the token
 	 * @param {number} options.counter - The OTP counter
 	 * @param {string} options.digest - The digest algorithm to use. Default is sha1
-	 * @param {number} options.length - The length of the generated token
+	 * @param {number} options.length - The length of the generated token. Default is 6
 	 */
-	constructor({ secret, counter, digest = 'sha1', length, ...rest }) {
+	constructor({ secret, counter = 0, digest = 'sha1', length = 6, ...rest }) {
 		super(rest);
 		rejectExtra(rest);
 		if (!secret) {

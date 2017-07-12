@@ -1,6 +1,9 @@
 import React from 'react';
 import { TouchableHighlight, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
 import COLORS from 'flatui-colors';
 import withNavigation from '../components/Navigation';
 import Entry from '../components/Entry';
@@ -17,28 +20,23 @@ class Home extends React.Component {
 	render() {
 		return (
 			<FlatList
-				data={[
-					{ key: 0, name: 'Google', service: 'google.com' },
-					{ key: 1, name: 'Github', service: 'github.com' },
-					{ key: 2, name: 'Gitlab', service: 'gitlab.org' },
-					{ key: 3, name: 'Google', service: 'google.com' },
-					{ key: 4, name: 'Github', service: 'github.com' },
-					{ key: 5, name: 'Gitlab', service: 'gitlab.org' },
-					{ key: 6, name: 'Google', service: 'google.com' },
-					{ key: 7, name: 'Github', service: 'github.com' },
-					{ key: 8, name: 'Gitlab', service: 'gitlab.org' },
-					{ key: 9, name: 'Google', service: 'google.com' },
-					{ key: 10, name: 'Github', service: 'github.com' },
-					{ key: 11, name: 'Gitlab', service: 'gitlab.org' },
-					{ key: 12, name: 'Google', service: 'google.com' },
-					{ key: 13, name: 'Github', service: 'github.com' },
-					{ key: 14, name: 'Gitlab', service: 'gitlab.org' },
-				]}
-				renderItem={({ item }) => <Entry {...item} />}
+				data={this.props.entries}
+				renderItem={({ item }) => <Entry uuid={item.uuid} />}
 			/>
 		);
 	}
 }
 
-export default withNavigation(Home);
+Home.propTypes = {
+	entries: PropTypes.arrayOf(PropTypes.shape({
+		key: PropTypes.string.isRequired,
+		uuid: PropTypes.string.isRequired,
+	})).isRequired,
+};
+
+const mapStateToProps = (state) => ({
+	entries: _(state.order).without(null).map((uuid) => ({ uuid, key: uuid })).value(),
+});
+
+export default connect(mapStateToProps, null)(withNavigation(Home));
 
