@@ -1,4 +1,5 @@
 import COLORS from 'flatui-colors';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
@@ -22,10 +23,10 @@ class EntryForm extends React.Component {
 		super(props);
 
 		this.state = {
-			name: '',
-			service: '',
-			algorithm: null,
-			secret: '',
+			name: _.get(props, 'entry.name', ''),
+			service: _.get(props, 'entry.service', ''),
+			algorithm: _.get(props, 'entry.algorithm', null),
+			secret: _.get(props, 'secrets.secret', ''),
 			buttonTimeout: false,
 		};
 

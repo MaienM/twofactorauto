@@ -21,7 +21,12 @@ class Home extends React.Component {
 		return (
 			<FlatList
 				data={this.props.entries}
-				renderItem={({ item }) => <Entry uuid={item.uuid} />}
+				renderItem={({ item }) => (
+					<Entry
+						uuid={item.uuid}
+						onPressEdit={() => this.props.navigation.navigate('EditEntry', { uuid: item.uuid })}
+					/>
+				)}
 			/>
 		);
 	}

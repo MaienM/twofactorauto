@@ -5,6 +5,7 @@ import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools as compose } from 'redux-devtools-extension/developmentOnly';
 import rootReducer from './reducers';
 import AddEntry from './screens/AddEntry';
+import EditEntry from './screens/EditEntry';
 import Home from './screens/Home';
 import { persistStore, autoRehydrate, toReduxPersistStorage } from './utils/persist';
 import * as storage from './utils/storage';
@@ -36,6 +37,7 @@ persistStore(store, [
 const Navigator = StackNavigator({
 	Home: { screen: Home },
 	AddEntry: { screen: AddEntry },
+	EditEntry: { screen: EditEntry },
 });
 
 // Build the main component

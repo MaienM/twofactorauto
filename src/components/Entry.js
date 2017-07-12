@@ -133,7 +133,7 @@ class Entry extends React.Component {
 		return (
 			<Swipeable
 				leftButtons={[
-					<MenuButton icon="edit" text="Edit" background={COLORS.EMERALD} />,
+					<MenuButton icon="edit" text="Edit" background={COLORS.EMERALD} onPress={this.props.onPressEdit} />,
 					<MenuButton icon="delete" text="Delete" background={COLORS.ALIZARIN} />,
 				]}
 				leftButtonContainerStyle={[styles.baseItem, styles.buttonContainer]}
@@ -180,6 +180,7 @@ Entry.propTypes = {
 	}).isRequired,
 	secrets: PropTypes.object.isRequired, // eslint-disable-line
 	onUpdateSecrets: PropTypes.func.isRequired,
+	onPressEdit: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
