@@ -4,7 +4,7 @@ import actions from '../constants/actions';
 const initialState = {};
 
 export default (state, action) => {
-	if (_.isUndefined(state) || action.type == actions.reset) {
+	if (_.isUndefined(state)) {
 		return initialState;
 	}
 
@@ -16,7 +16,7 @@ export default (state, action) => {
 			}
 			return { ...state, [action.uuid]: action.entry };
 		case actions.entry.delete:
-			return _.without(state, action.uuid);
+			return _.omit(state, action.uuid);
 		default:
 			return state;
 	}

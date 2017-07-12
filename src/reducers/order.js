@@ -4,7 +4,7 @@ import actions from '../constants/actions';
 const initialState = [];
 
 export default (state, action) => {
-	if (_.isUndefined(state) || action.type == actions.reset) {
+	if (_.isUndefined(state)) {
 		return initialState;
 	}
 

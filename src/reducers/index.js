@@ -1,11 +1,21 @@
 import { combineReducers } from 'redux';
+import actions from '../constants/actions';
 import order from './order';
 import entries from './entries';
 import secrets from './secrets';
 
-export default combineReducers({
+const appReducer = combineReducers({
 	order,
 	entries,
 	secrets,
 });
+
+export default (state, action) => {
+	let appState = state;
+	if (action.type === actions.reset) {
+		appState = undefined;
+	}
+
+	return appReducer(appState, action);
+};
 
