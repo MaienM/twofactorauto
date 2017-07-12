@@ -111,7 +111,7 @@ class Entry extends React.Component {
 		};
 
 		this.onPress = this.onPress.bind(this);
-		this.onTimeElapsed = this.onTimeElapsed.bind(this);
+		this.handleTimeElapsed = this.handleTimeElapsed.bind(this);
 	}
 
 	onPress() {
@@ -123,7 +123,7 @@ class Entry extends React.Component {
 		this.props.onUpdateSecrets(algorithm.persist());
 	}
 
-	onTimeElapsed() {
+	handleTimeElapsed() {
 		this.setState({
 			code: null,
 		});
@@ -160,7 +160,7 @@ class Entry extends React.Component {
 									containerStyle={styles.codeTimer}
 									textStyle={styles.codeTimerText}
 									duration={TIMEOUT}
-									onFinish={this.onTimeElapsed}
+									onFinish={this.handleTimeElapsed}
 								/>
 							</View>
 						)}

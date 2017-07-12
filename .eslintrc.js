@@ -32,5 +32,8 @@ config.rules['react/no-direct-mutation-state'] = 'error';
 // React native does not support .jsx
 config.rules['react/jsx-filename-extension'][1]['extensions'] = ['.js'];
 
+// Enforce consistent jsx event props and handler names
+config.rules['react/jsx-handler-names'][0] = 'error';
+
 module.exports = config;
 

@@ -28,30 +28,30 @@ class EntryForm extends React.Component {
 			secret: '',
 		};
 
-		this.onChangeName = this.onChangeName.bind(this);
-		this.onChangeService = this.onChangeService.bind(this);
-		this.onChangeAlgorithm = this.onChangeAlgorithm.bind(this);
-		this.onChangeSecret = this.onChangeSecret.bind(this);
-		this.onPressSave = this.onPressSave.bind(this);
+		this.handleChangeName = this.handleChangeName.bind(this);
+		this.handleChangeService = this.handleChangeService.bind(this);
+		this.handleChangeAlgorithm = this.handleChangeAlgorithm.bind(this);
+		this.handleChangeSecret = this.handleChangeSecret.bind(this);
+		this.handlePressSave = this.handlePressSave.bind(this);
 	}
 
-	onChangeName(name) {
+	handleChangeName(name) {
 		this.setState({ name });
 	}
 
-	onChangeService(service) {
+	handleChangeService(service) {
 		this.setState({ service });
 	}
 
-	onChangeAlgorithm(algorithm) {
+	handleChangeAlgorithm(algorithm) {
 		this.setState({ algorithm });
 	}
 
-	onChangeSecret(secret) {
+	handleChangeSecret(secret) {
 		this.setState({ secret });
 	}
 
-	onPressSave() {
+	handlePressSave() {
 		this.props.onSave({
 			entry: {
 				name: this.state.name,
@@ -70,7 +70,7 @@ class EntryForm extends React.Component {
 			<ScrollView style={styles.container}>
 				<FormLabel>Name</FormLabel>
 				<FormInput
-					onChangeText={this.onChangeName}
+					onChangeText={this.handleChangeName}
 					value={this.state.name}
 					placeholder="Name"
 					returnKeyType="next"
@@ -79,7 +79,7 @@ class EntryForm extends React.Component {
 
 				<FormLabel>Service</FormLabel>
 				<FormInput
-					onChangeText={this.onChangeService}
+					onChangeText={this.handleChangeService}
 					value={this.state.service}
 					placeholder="Service"
 					returnKeyType="next"
@@ -87,7 +87,7 @@ class EntryForm extends React.Component {
 				{validate(!this.state.service && 'Cannot be empty')}
 
 				<FormLabel>Algorithm</FormLabel>
-				<FormInputPicker onValueChange={this.onChangeAlgorithm} value={this.state.algorithm}>
+				<FormInputPicker onValueChange={this.handleChangeAlgorithm} value={this.state.algorithm}>
 					<FormInputPicker.Item label="" value={null} />
 					<FormInputPicker.Item label="HOTP" value="hotp" />
 					<FormInputPicker.Item label="TOTP" value="totp" />
@@ -96,7 +96,7 @@ class EntryForm extends React.Component {
 
 				<FormLabel>Secret (base64 encoded)</FormLabel>
 				<FormInput
-					onChangeText={this.onChangeSecret}
+					onChangeText={this.handleChangeSecret}
 					value={this.state.secret}
 					placeholder="Secret"
 				/>
@@ -106,7 +106,7 @@ class EntryForm extends React.Component {
 				)}
 
 				<Button
-					onPress={this.onPressSave}
+					onPress={this.handlePressSave}
 					title="Save"
 					icon={{ name: 'save' }}
 					backgroundColor={COLORS.NEPHRITIS}
