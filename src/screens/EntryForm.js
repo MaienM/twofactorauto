@@ -26,6 +26,7 @@ class EntryForm extends React.Component {
 			service: '',
 			algorithm: null,
 			secret: '',
+			buttonTimeout: false,
 		};
 
 		this.handleChangeName = this.handleChangeName.bind(this);
@@ -52,6 +53,8 @@ class EntryForm extends React.Component {
 	}
 
 	handlePressSave() {
+		this.setState({ buttonTimeout: true });
+		setTimeout(() => this.setState({ buttonTimeout: false }), 1000);
 		this.props.onSave({
 			entry: {
 				name: this.state.name,
@@ -111,7 +114,7 @@ class EntryForm extends React.Component {
 					icon={{ name: 'save' }}
 					backgroundColor={COLORS.NEPHRITIS}
 					buttonStyle={styles.button}
-					disabled={!isValid()}
+					disabled={!isValid() || this.state.buttonTimeout}
 					large
 				/>
 			</ScrollView>
