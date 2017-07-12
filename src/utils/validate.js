@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import React from 'react';
 import { FormValidationMessage } from 'react-native-elements';
-import _ from 'lodash';
 
 let valid = true;
 

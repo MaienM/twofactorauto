@@ -1,7 +1,7 @@
-import _ from 'lodash';
 import { createHmac } from 'crypto';
-import Algorithm, { rejectExtra } from './base';
+import _ from 'lodash';
 import * as buf from '../utils/buffer';
+import Algorithm, { rejectExtra } from './base';
 
 /* eslint-disable no-bitwise */
 

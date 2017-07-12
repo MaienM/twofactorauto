@@ -1,8 +1,8 @@
+import COLORS from 'flatui-colors';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { Button, FormLabel, FormInput } from 'react-native-elements';
-import PropTypes from 'prop-types';
-import COLORS from 'flatui-colors';
 import FormInputPicker from '../components/FormInputPicker';
 import withNavigation from '../components/Navigation';
 import * as buf from '../utils/buffer';

@@ -1,6 +1,6 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Easing, Animated, Text, View, ViewPropTypes } from 'react-native';
-import PropTypes from 'prop-types';
 
 const propTypesView = (ViewPropTypes || View.propTypes);
 

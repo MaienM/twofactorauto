@@ -1,15 +1,15 @@
+import COLORS from 'flatui-colors';
+import _ from 'lodash';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, TouchableHighlight, View, Text } from 'react-native';
 import Swipeable from 'react-native-swipeable';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
-import _ from 'lodash';
-import PropTypes from 'prop-types';
-import COLORS from 'flatui-colors';
 import { updateEntry } from '../actions/entries';
+import algorithms from '../algorithms';
 import { getComplementary } from '../utils/colors';
 import CountdownCircle from './CountdownCircle';
-import algorithms from '../algorithms';
 
 const TIMEOUT = 30;
 

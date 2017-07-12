@@ -1,12 +1,12 @@
+import COLORS from 'flatui-colors';
+import _ from 'lodash';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { TouchableHighlight, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import _ from 'lodash';
-import COLORS from 'flatui-colors';
-import withNavigation from '../components/Navigation';
 import Entry from '../components/Entry';
+import withNavigation from '../components/Navigation';
 
 class Home extends React.Component {
 	static renderHeaderRight({ navigation }) {

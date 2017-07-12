@@ -1,7 +1,7 @@
+import COLORS from 'flatui-colors';
+import _ from 'lodash';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import _ from 'lodash';
-import COLORS from 'flatui-colors';
 import setupHOC from '../utils/hoc';
 
 const styles = StyleSheet.create({

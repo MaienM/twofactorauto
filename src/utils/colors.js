@@ -1,6 +1,6 @@
-import _ from 'lodash';
 import Color from 'color';
 import COLORS from 'flatui-colors';
+import _ from 'lodash';
 
 // Based on http://www.poynton.com/notes/colour_and_gamma/ColorFAQ.html#RTFToC9
 const yiq = (r, g, b) => ((r * 2162) + (g * 7152) + (b * 722)) / 10000.0;

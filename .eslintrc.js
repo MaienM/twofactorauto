@@ -29,6 +29,11 @@ config.rules['no-multiple-empty-lines'][1]['max'] = 1;
 // I have seen no arguments against use of ++ that don't boil down to "understand what an operator does before using it"
 config.rules['no-plusplus'] = 'off';
 
+// Consistent import order
+// Uses a feature implemented in https://github.com/benmosher/eslint-plugin-import/pull/629
+config.rules['import/order'][0] = 'error';
+config.rules['import/order'][1]['sort'] = 'alphabetical';
+
 // Avoid directly mutating the state
 config.rules['react/no-direct-mutation-state'] = 'error';
 

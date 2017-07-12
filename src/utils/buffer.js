@@ -1,5 +1,5 @@
-import _ from 'lodash';
 import { Buffer } from 'buffer';
+import _ from 'lodash';
 
 /**
  * Convert a string into a buffer.
