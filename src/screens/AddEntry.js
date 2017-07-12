@@ -7,8 +7,11 @@ const mapStateToProps = (state, ownProps) => ({
 	secrets: state.secrets[ownProps.uuid],
 });
 
-const mapDispatchToProps = (dispatch) => ({
-	onSave: ({ entry, secrets }) => dispatch(createEntry({ entry, secrets })),
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	onSave: ({ entry, secrets }) => {
+		ownProps.navigation.goBack();
+		dispatch(createEntry({ entry, secrets }));
+	},
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EntryForm);
