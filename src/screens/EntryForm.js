@@ -4,10 +4,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { Button, FormLabel, FormInput } from 'react-native-elements';
+import debouncedTouchable from '../components/DebouncedTouchable';
 import FormInputPicker from '../components/FormInputPicker';
 import withNavigation from '../components/Navigation';
 import * as buf from '../utils/buffer';
 import { validate, resetValidation, isValid } from '../utils/validate';
+
+const DebouncedButton = debouncedTouchable(Button);
 
 const styles = StyleSheet.create({
 	container: {
@@ -27,7 +30,6 @@ class EntryForm extends React.Component {
 			service: _.get(props, 'entry.service', ''),
 			algorithm: _.get(props, 'entry.algorithm', null),
 			secret: _.get(props, 'secrets.secret', ''),
-			buttonTimeout: false,
 		};
 
 		this.handleChangeName = this.handleChangeName.bind(this);
@@ -54,8 +56,6 @@ class EntryForm extends React.Component {
 	}
 
 	handlePressSave() {
-		this.setState({ buttonTimeout: true });
-		setTimeout(() => this.setState({ buttonTimeout: false }), 1000);
 		this.props.onSave({
 			entry: {
 				name: this.state.name,
@@ -109,13 +109,14 @@ class EntryForm extends React.Component {
 					!buf.fromBase64(this.state.secret) && 'Must be a valid base64 encoded string',
 				)}
 
-				<Button
+				<DebouncedButton
 					onPress={this.handlePressSave}
+					wait={1000}
 					title="Save"
 					icon={{ name: 'save' }}
 					backgroundColor={COLORS.NEPHRITIS}
 					buttonStyle={styles.button}
-					disabled={!isValid() || this.state.buttonTimeout}
+					disabled={!isValid()}
 					large
 				/>
 			</ScrollView>
