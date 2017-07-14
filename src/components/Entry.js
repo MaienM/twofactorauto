@@ -8,8 +8,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
 import { updateEntry } from '../actions/entries';
 import algorithms from '../algorithms';
+import debouncedTouchable from '../components/DebouncedTouchable';
 import { getComplementary } from '../utils/colors';
 import CountdownCircle from './CountdownCircle';
+
+const DebouncedTouchableHighlight = debouncedTouchable(TouchableHighlight);
 
 const TIMEOUT = 30;
 
@@ -82,12 +85,12 @@ const MenuButton = (props) => {
 	const color = getComplementary(background);
 
 	return (
-		<TouchableHighlight onPress={onPress}>
+		<DebouncedTouchableHighlight onPress={onPress}>
 			<View style={[styles.buttonContainer, { backgroundColor: background }]}>
 				<Text style={[styles.buttonText, { color }]}>{text}</Text>
 				<Icon name={icon} size={40} color={color} style={styles.buttonIcon} />
 			</View>
-		</TouchableHighlight>
+		</DebouncedTouchableHighlight>
 	);
 };
 
