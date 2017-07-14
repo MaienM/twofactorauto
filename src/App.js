@@ -1,10 +1,9 @@
 import React from 'react';
-import { StackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools as compose } from 'redux-devtools-extension/developmentOnly';
 import rootReducer from './reducers';
-import { Home, AddEntry, EditEntry } from './screens';
+import ReduxNavigator from './ReduxNavigator';
 import { persistStore, autoRehydrate, toReduxPersistStorage } from './utils/persist';
 import * as storage from './utils/storage';
 
@@ -31,17 +30,10 @@ persistStore(store, [
 	},
 ]);
 
-// Setup the navigator
-const Navigator = StackNavigator({
-	Home: { screen: Home },
-	AddEntry: { screen: AddEntry },
-	EditEntry: { screen: EditEntry },
-});
-
 // Build the main component
 export default () => (
 	<Provider store={store}>
-		<Navigator />
+		<ReduxNavigator />
 	</Provider>
 );
 

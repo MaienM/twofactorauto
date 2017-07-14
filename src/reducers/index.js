@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
 import actions from '../constants/actions';
 import entries from './entries';
+import navigation from './navigation';
 import order from './order';
 import secrets from './secrets';
 
 const appReducer = combineReducers({
-	order,
 	entries,
+	order,
+	navigation,
 	secrets,
 });
 
