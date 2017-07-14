@@ -4,9 +4,7 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools as compose } from 'redux-devtools-extension/developmentOnly';
 import rootReducer from './reducers';
-import AddEntry from './screens/AddEntry';
-import EditEntry from './screens/EditEntry';
-import Home from './screens/Home';
+import { Home, AddEntry, EditEntry } from './screens';
 import { persistStore, autoRehydrate, toReduxPersistStorage } from './utils/persist';
 import * as storage from './utils/storage';
 
