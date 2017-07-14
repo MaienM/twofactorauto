@@ -40,6 +40,9 @@ Home.propTypes = {
 		key: PropTypes.string.isRequired,
 		uuid: PropTypes.string.isRequired,
 	})).isRequired,
+	navigation: PropTypes.shape({
+		navigate: PropTypes.func.isRequired,
+	}).isRequired,
 };
 
 const mapStateToProps = (state) => ({
