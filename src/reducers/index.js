@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import actions from '../constants/actions';
+import { actions } from '../constants';
 import entries from './entries';
 import navigation from './navigation';
 import order from './order';

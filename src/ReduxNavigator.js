@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { addNavigationHelpers } from 'react-navigation';
 import { connect } from 'react-redux';
-import Navigator from './Navigator';
+import Navigator from './screens';
 
 const ReduxNavigator = (props) => (
 	<Navigator

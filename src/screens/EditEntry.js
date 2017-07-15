@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
 import { updateEntry } from '../actions/entries';
+import { back } from '../actions/navigation';
+import { routes } from '../constants';
 import { getParams } from '../utils/navigation';
 import EntryForm from './EntryForm';
 
@@ -10,12 +12,12 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	onSave: ({ entry, secrets }) => {
-		ownProps.navigation.goBack();
 		dispatch(updateEntry({
 			uuid: getParams(ownProps).uuid,
 			entry,
 			secrets,
 		}));
+		dispatch(back(routes.entry.edit));
 	},
 });
 

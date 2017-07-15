@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import uuidGen from 'uuid/v4';
-import actions from '../constants/actions';
+import { actions } from '../constants';
 
 export const createEntry = ({ uuid = uuidGen(), entry, secrets }) => {
 	if (!_.isObject(entry)) {

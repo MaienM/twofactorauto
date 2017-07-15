@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import actions from '../constants/actions';
+import { actions } from '../constants';
 
 const initialState = {};
 
