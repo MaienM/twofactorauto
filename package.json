@@ -4,11 +4,14 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
     "test": "jest --watch",
+    "lint": "eslint src",
+    "android": "npm run android-run android-dev",
+    "android-run": "react-native run-android",
     "android-dev": "scripts/adb.sh",
-    "lint": "eslint src"
+    "android-build-bundle": "scripts/android-bundle.sh",
+    "android-build-apk": "scripts/android-apk.sh",
+    "ios": "react-native run-ios"
   },
   "dependencies": {
     "buffer": "^5.0.6",

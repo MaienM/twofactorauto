@@ -1,24 +1,53 @@
 # vi:ts=2:sw=2:sts=2:et
 
 stages:
+  - deps
   - test
+  - build:bundle
+  - build:package
 
-cache:
-  key: "$CI_JOB_NAME"
-  paths:
-    - node_modules/
+yarn:
+  stage: deps
+  image: node:alpine
+  script:
+    - yarn
+  artifacts:
+    expire_in: 15 minutes
+    paths:
+      - node_modules
 
 eslint:
   stage: test
   image: node:alpine
   script:
-    - yarn
     - yarn run lint
 
 jest:
   stage: test
   image: node:alpine
   script:
-    - yarn
     - yarn run jest
+
+android:bundle:
+  stage: build:bundle
+  image: node
+  script:
+    - yarn run android-build-bundle
+  artifacts:
+    expire_in: 15 minutes
+    paths:
+      - android/app/src/main/assets
+      - android/app/src/main/res
+
+android:apk:
+  stage: build:package
+  image: maienm/android
+  script:
+    - ./scripts/ci/android-apk.sh
+    - ./scripts/android-apk.sh Beta
+    - cp android/app/build/outputs/apk/app-beta.apk two-factor-auto.apk
+  artifacts:
+    name: "two-factor-auto-${CI_COMMIT_TAG:-$CI_COMMIT_REF_NAME-${CI_COMMIT_SHA:0:7}}"
+    paths:
+      - two-factor-auto.apk
 

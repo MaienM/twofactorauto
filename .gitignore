@@ -29,6 +29,10 @@ build/
 .gradle
 local.properties
 *.iml
+keystore.properties
+*.keystore
+android/app/src/main/res
+android/app/src/main/assets
 
 # node.js
 #
