@@ -18,7 +18,7 @@ const store = createStore(
 );
 
 // Add the storage backends
-const TRANSIENT_STORES = [];
+const TRANSIENT_STORES = ['navigation'];
 const SECURE_STORES = ['secrets'];
 persistStore(store, [
 	{
