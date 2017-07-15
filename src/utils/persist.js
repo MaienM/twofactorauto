@@ -28,7 +28,12 @@ export const persistStore = (store, configs) => {
 	});
 
 	// Fetch data of all configs
-	return Promise.all(_.map(configs, (c) => getStoredStatePromise(store, c)))
+	return Promise.all(_.map(configs, (c) => (
+		getStoredStatePromise(store, c)
+			// Apply whitelist and blacklist
+			.then((state) => (c.whitelist ? _.pick(state, c.whitelist) : state))
+			.then((state) => (c.blacklist ? _.omit(state, c.blacklist) : state))
+	)))
 		.then((states) => {
 			// Dispatch a single rehydrate action
 			store.dispatch({
