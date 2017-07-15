@@ -2,6 +2,7 @@ import COLORS from 'flatui-colors';
 import _ from 'lodash';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import Dialogs from '../ReduxDialogs';
 import setupHOC from '../utils/hoc';
 
 const styles = StyleSheet.create({
@@ -32,7 +33,12 @@ const defaultNavigationOptions = {
 };
 
 export default (Component) => {
-	const withNavigation = (props) => <Component {...props} />;
+	const withNavigation = (props) => (
+		<View>
+			<Component {...props} />
+			<Dialogs />
+		</View>
+	);
 	setupHOC(Component, withNavigation);
 
 	withNavigation.navigationOptions = (...args) => _.assignIn(

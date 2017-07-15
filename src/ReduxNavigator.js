@@ -19,7 +19,7 @@ ReduxNavigator.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-	state: state.navigation,
+	state: state.navigation.navigator,
 });
 
 export default connect(mapStateToProps)(ReduxNavigator);

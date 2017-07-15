@@ -4193,6 +4193,12 @@ react-native-elements@^0.14.0:
   version "1.2.0"
   resolved "https://codeload.github.com/oblador/react-native-keychain/tar.gz/c4b2b4dcfe4e36d2cfc86bf25d3a5af461779464"
 
+react-native-material-dialog@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/react-native-material-dialog/-/react-native-material-dialog-0.4.4.tgz#5072ba0984736e54c7b4da416102e3371fa1d3a6"
+  dependencies:
+    react-native-vector-icons "^4.0.0"
+
 react-native-randombytes@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/react-native-randombytes/-/react-native-randombytes-2.2.0.tgz#93099cd7f93b1b228bbd380617e8bbf0d73c4cfb"
@@ -4220,7 +4226,7 @@ react-native-tab-view@^0.0.65:
   dependencies:
     prop-types "^15.5.8"
 
-react-native-vector-icons@^4.2.0:
+react-native-vector-icons@^4.0.0, react-native-vector-icons@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.2.0.tgz#0594b68debdd758dce4c565bf02e2d64d7004d82"
   dependencies:
