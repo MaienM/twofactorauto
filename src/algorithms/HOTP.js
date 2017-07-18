@@ -1,7 +1,8 @@
 import { createHmac } from 'crypto';
 import _ from 'lodash';
 import * as buf from '../utils/buffer';
-import Algorithm, { rejectExtra } from './base';
+import { requireEmpty } from '../utils/validate';
+import Algorithm from './base';
 
 /* eslint-disable no-bitwise */
 
@@ -30,7 +31,7 @@ export default class HOTP extends Algorithm {
 	 */
 	constructor({ secret, counter = 0, digest = 'sha1', length = 6, ...rest }) {
 		super(rest);
-		rejectExtra(rest);
+		requireEmpty(rest);
 		if (!secret) {
 			throw new Error('Invalid secret');
 		}
@@ -57,7 +58,7 @@ export default class HOTP extends Algorithm {
 		if (!_.isNumber(counter) || counter < 0) {
 			throw new Error(`Invalid counter ${counter}`);
 		}
-		rejectExtra(rest);
+		requireEmpty(rest);
 
 		// Convert the secret to a buffer
 		let bSecret = buf.fromString(this.secret);

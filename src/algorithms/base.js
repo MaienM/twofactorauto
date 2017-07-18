@@ -1,14 +1,3 @@
-import _ from 'lodash';
-
-/**
- * An helper method to easily fail when a method receives any superfluous options.
- */
-export const rejectExtra = (options) => {
-	if (!_(options).keys().isEmpty()) {
-		throw new Error(`Unexpected options ${_.keys(options)}`);
-	}
-};
-
 /* eslint-disable */
 
 /**
@@ -23,8 +12,7 @@ export default class Algorithm {
 	 *
 	 * @params {Object} options - The options
 	 */
-	constructor() {
-	}
+	constructor() {}
 
 	/**
 	 * This method should generate a one-time password based on the options passed to the constructor + the options

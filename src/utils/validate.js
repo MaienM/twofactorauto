@@ -1,29 +1,26 @@
 import _ from 'lodash';
-import React from 'react';
-import { FormValidationMessage } from 'react-native-elements';
-
-let valid = true;
 
 /**
- * A method that can make validation easier.
- *
- * It accepts a list of validations, and the first one to fail will be shown. Validations can be any of the following:
- *
- * - An string, indicating an already failed validation.
- * - A falsy value, indicating an already passed validation.
+ * An helper method to easily fail when a method receives any superfluous options.
  */
-export const validate = (...validators) => {
-	const message = _(validators).filter().first();
-	if (!message) {
-		return null;
+export const requireEmpty = (options) => {
+	if (!_(options).keys().isEmpty()) {
+		throw new Error(`Unexpected options ${_.keys(options)}`);
 	}
-	valid = false;
-	return <FormValidationMessage>{message}</FormValidationMessage>;
 };
 
-export const resetValidation = () => {
-	valid = true;
+/**
+ * An helper method to require exactly one of the passed options to be set.
+ */
+export const requireOneOf = (options) => {
+	const nonEmpty = _(options)
+		.toPairs()
+		.filter((e) => e[1])
+		.map(0)
+		.value();
+	if (nonEmpty.length !== 1) {
+		throw new Error(`Must have exactly one of ${_.keys(options).join(', ')}, received ${nonEmpty.join(', ')}`);
+	}
+	return nonEmpty[0];
 };
-
-export const isValid = () => valid;
 

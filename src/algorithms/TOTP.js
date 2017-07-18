@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { rejectExtra } from './base';
+import { requireEmpty } from '../utils/validate';
 import HOTP from './HOTP';
 
 /**
@@ -22,7 +22,7 @@ export default class TOTP extends HOTP {
 	 */
 	constructor({ secret, tStart = 0, tInterval = 30, digest, length, ...rest }) {
 		super({ secret, digest, length, counter: 0 });
-		rejectExtra(rest);
+		requireEmpty(rest);
 		if (!_.isNumber(tStart)) {
 			throw new Error(`Invalid tStart ${tStart}`);
 		}
@@ -40,7 +40,7 @@ export default class TOTP extends HOTP {
 	 * @return {string} - The generated token
 	 */
 	generate({ timestamp = Date.now(), ...rest } = {}) {
-		rejectExtra(rest);
+		requireEmpty(rest);
 		if (!_.isNumber(timestamp) && !_.isDate(timestamp)) {
 			throw new Error(`Invalid timestamp ${timestamp}`);
 		}
