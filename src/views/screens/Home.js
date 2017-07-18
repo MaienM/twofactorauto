@@ -2,23 +2,22 @@ import COLORS from 'flatui-colors';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { TouchableHighlight, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
-import { navigate, dialog } from '../actions/navigation';
-import debouncedTouchable from '../components/DebouncedTouchable';
-import Entry from '../components/Entry';
-import withNavigation from '../components/Navigation';
-import { routes } from '../constants';
-
-const DebouncedTouchableHighlight = debouncedTouchable(TouchableHighlight);
+import { navigate, dialog } from '../../actions/navigation';
+import Entry from '../../components/Entry';
+import NavigationButtons from '../../components/navigation/NavigationButtons';
+import { routes } from '../../constants';
 
 class Home extends React.Component {
-	static renderHeaderRight({ navigation }) {
+	renderHeaderRight() {
 		return (
-			<DebouncedTouchableHighlight onPress={() => navigation.navigate(routes.entry.add)}>
-				<Icon name="add" size={40} color={COLORS.CLOUDS} />
-			</DebouncedTouchableHighlight>
+			<NavigationButtons>
+				<NavigationButtons.Button onPress={this.props.onNavigationAdd}>
+					<Icon name="add" size={40} color={COLORS.CLOUDS} />
+				</NavigationButtons.Button>
+			</NavigationButtons>
 		);
 	}
 
@@ -45,6 +44,7 @@ Home.propTypes = {
 	})).isRequired,
 	onEditEntry: PropTypes.func.isRequired,
 	onDeleteEntry: PropTypes.func.isRequired,
+	onNavigationAdd: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -54,7 +54,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	onEditEntry: (uuid) => dispatch(navigate(routes.entry.edit, { uuid })),
 	onDeleteEntry: (uuid) => dispatch(dialog(routes.entry.delete, { uuid })),
+	onNavigationAdd: () => dispatch(navigate(routes.entry.add)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(Home));
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
 

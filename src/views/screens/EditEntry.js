@@ -1,18 +1,17 @@
 import { connect } from 'react-redux';
-import { updateEntry } from '../actions/entries';
-import { back } from '../actions/navigation';
-import { getParams } from '../utils/navigation';
+import { updateEntry } from '../../actions/entries';
+import { back } from '../../actions/navigation';
 import EntryForm from './EntryForm';
 
 const mapStateToProps = (state, ownProps) => ({
-	entry: state.entries[getParams(ownProps).uuid],
-	secrets: state.secrets[getParams(ownProps).uuid],
+	entry: state.entries[ownProps.uuid],
+	secrets: state.secrets[ownProps.uuid],
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	onSave: ({ entry, secrets }) => {
 		dispatch(updateEntry({
-			uuid: getParams(ownProps).uuid,
+			uuid: ownProps.uuid,
 			entry,
 			secrets,
 		}));

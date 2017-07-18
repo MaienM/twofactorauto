@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { createEntry } from '../actions/entries';
-import { back } from '../actions/navigation';
+import { createEntry } from '../../actions/entries';
+import { back } from '../../actions/navigation';
 import EntryForm from './EntryForm';
 
 const mapDispatchToProps = (dispatch) => ({

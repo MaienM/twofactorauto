@@ -3,9 +3,9 @@ import React from 'react';
 import { Text } from 'react-native';
 import { MaterialDialog } from 'react-native-material-dialog';
 import { connect } from 'react-redux';
-import { deleteEntry } from '../actions/entries';
-import { dismiss } from '../actions/navigation';
-import { routes } from '../constants';
+import { deleteEntry } from '../../actions/entries';
+import { dismiss } from '../../actions/navigation';
+import { routes } from '../../constants';
 
 const DeleteEntry = (props) => (
 	<MaterialDialog

@@ -4,11 +4,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { Button, FormLabel, FormInput } from 'react-native-elements';
-import debouncedTouchable from '../components/DebouncedTouchable';
-import FormInputPicker from '../components/FormInputPicker';
-import withNavigation from '../components/Navigation';
-import * as buf from '../utils/buffer';
-import { validate, resetValidation, isValid } from '../utils/validate';
+import debouncedTouchable from '../../components/DebouncedTouchable';
+import FormInputPicker from '../../components/FormInputPicker';
+import * as buf from '../../utils/buffer';
+import { validate, resetValidation, isValid } from '../../utils/validate';
 
 const DebouncedButton = debouncedTouchable(Button);
 
@@ -21,7 +20,7 @@ const styles = StyleSheet.create({
 	},
 });
 
-class EntryForm extends React.Component {
+export default class EntryForm extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -128,4 +127,3 @@ EntryForm.propTypes = {
 	onSave: PropTypes.func.isRequired,
 };
 
-export default withNavigation(EntryForm);
