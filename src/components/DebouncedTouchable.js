@@ -40,7 +40,7 @@ export default (Component) => {
 	debouncedTouchable.propTypes = {
 		debounceWait: PropTypes.number,
 		onPress: PropTypes.func.isRequired,
-		disabled: PropTypes.boolean,
+		disabled: PropTypes.bool,
 	};
 
 	debouncedTouchable.defaultProps = {
