@@ -6,7 +6,7 @@
     "start": "react-native start",
     "test": "jest --watch",
     "lint": "eslint src",
-    "android": "npm run android-run android-dev",
+    "android": "npm run android-run && npm run android-dev",
     "android-run": "react-native run-android",
     "android-dev": "scripts/adb.sh",
     "android-build-bundle": "scripts/android-bundle.sh",
