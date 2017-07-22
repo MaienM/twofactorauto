@@ -29,6 +29,9 @@ config.rules['no-multiple-empty-lines'][1]['max'] = 1;
 // I have seen no arguments against use of ++ that don't boil down to "understand what an operator does before using it"
 config.rules['no-plusplus'] = 'off';
 
+// Forbid a space between 'function' and the opening '(' when the function is unnamed
+config.rules['space-before-function-paren'][1]['anonymous'] = 'never';
+
 // Consistent import order
 // Uses a feature implemented in https://github.com/benmosher/eslint-plugin-import/pull/629
 config.rules['import/order'][0] = 'error';
