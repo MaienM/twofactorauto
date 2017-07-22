@@ -17,6 +17,7 @@
     "buffer": "^5.0.6",
     "color": "^2.0.0",
     "flatui-colors": "^1.0.3",
+    "hoist-non-react-statics": "^2.2.0",
     "lodash": "^4.17.4",
     "node-libs-react-native": "^1.0.1",
     "prop-types": "^15.5.10",

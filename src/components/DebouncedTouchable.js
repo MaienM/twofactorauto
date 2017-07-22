@@ -38,13 +38,14 @@ export default (Component) => {
 	setupHOC(Component, debouncedTouchable);
 
 	debouncedTouchable.propTypes = {
-		...debouncedTouchable.propTypes,
 		debounceWait: PropTypes.number,
+		onPress: PropTypes.func.isRequired,
+		disabled: PropTypes.boolean,
 	};
 
 	debouncedTouchable.defaultProps = {
-		...debouncedTouchable.defaultProps,
 		debounceWait: 1000,
+		disabled: false,
 	};
 
 	return debouncedTouchable;
