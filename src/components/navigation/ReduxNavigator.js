@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { addNavigationHelpers } from 'react-navigation';
 import { connect } from 'react-redux';
-import Navigator from './screens';
+import Navigator from './Navigator';
 
 const ReduxNavigator = (props) => (
 	<Navigator
@@ -19,7 +19,7 @@ ReduxNavigator.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-	state: state.navigation.navigator,
+	state: state.navigation,
 });
 
 export default connect(mapStateToProps)(ReduxNavigator);

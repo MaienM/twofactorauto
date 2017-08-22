@@ -2,8 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools as compose } from 'redux-devtools-extension/developmentOnly';
+import ReduxNavigator from './components/navigation/ReduxNavigator';
 import rootReducer from './reducers';
-import ReduxNavigator from './ReduxNavigator';
 import { persistStore, autoRehydrate, toReduxPersistStorage } from './utils/persist';
 import * as storage from './utils/storage';
 

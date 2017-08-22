@@ -10,32 +10,36 @@ import Entry from '../../components/Entry';
 import NavigationButtons from '../../components/navigation/NavigationButtons';
 import { routes } from '../../constants';
 
-class Home extends React.Component {
-	renderHeaderRight() {
-		return (
-			<NavigationButtons>
-				<NavigationButtons.Button onPress={this.props.onNavigationAdd}>
-					<Icon name="add" size={40} color={COLORS.CLOUDS} />
-				</NavigationButtons.Button>
-			</NavigationButtons>
-		);
-	}
+const HeaderRight = (props) => (
+	<NavigationButtons>
+		<NavigationButtons.Button onPress={props.onNavigationAdd}>
+			<Icon name="add" size={40} color={COLORS.CLOUDS} />
+		</NavigationButtons.Button>
+	</NavigationButtons>
+);
 
-	render() {
-		return (
-			<FlatList
-				data={this.props.entries}
-				renderItem={({ item }) => (
-					<Entry
-						uuid={item.uuid}
-						onPressEdit={() => this.props.onEditEntry(item.uuid)}
-						onPressDelete={() => this.props.onDeleteEntry(item.uuid)}
-					/>
-				)}
+HeaderRight.propTypes = {
+	onNavigationAdd: PropTypes.func.isRequired,
+};
+
+const mapHeaderDispatchToProps = (dispatch) => ({
+	onNavigationAdd: () => dispatch(navigate(routes.entry.add)),
+});
+
+const HomeHeaderRight = connect(null, mapHeaderDispatchToProps)(HeaderRight);
+
+const Home = (props) => (
+	<FlatList
+		data={props.entries}
+		renderItem={({ item }) => (
+			<Entry
+				uuid={item.uuid}
+				onPressEdit={() => props.onEditEntry(item.uuid)}
+				onPressDelete={() => props.onDeleteEntry(item.uuid)}
 			/>
-		);
-	}
-}
+		)}
+	/>
+);
 
 Home.propTypes = {
 	entries: PropTypes.arrayOf(PropTypes.shape({
@@ -44,7 +48,10 @@ Home.propTypes = {
 	})).isRequired,
 	onEditEntry: PropTypes.func.isRequired,
 	onDeleteEntry: PropTypes.func.isRequired,
-	onNavigationAdd: PropTypes.func.isRequired,
+};
+
+Home.navigationOptions = {
+	headerRight: <HomeHeaderRight />,
 };
 
 const mapStateToProps = (state) => ({
@@ -54,7 +61,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	onEditEntry: (uuid) => dispatch(navigate(routes.entry.edit, { uuid })),
 	onDeleteEntry: (uuid) => dispatch(dialog(routes.entry.delete, { uuid })),
-	onNavigationAdd: () => dispatch(navigate(routes.entry.add)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
