@@ -1,23 +1,5 @@
-import { combineReducers } from 'redux';
-import { actions } from '../constants';
-import entries from './entries';
-import navigation from './navigation';
-import order from './order';
-import secrets from './secrets';
-
-const appReducer = combineReducers({
-	entries,
-	order,
-	navigation,
-	secrets,
-});
-
-export default (state, action) => {
-	let appState = state;
-	if (action.type === actions.reset) {
-		appState = undefined;
-	}
-
-	return appReducer(appState, action);
-};
+export entries from './entries';
+export navigation from './navigation';
+export order from './order';
+export secrets from './secrets';
 

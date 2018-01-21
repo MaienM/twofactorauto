@@ -16,8 +16,8 @@ RUN apt-get update \
 	&& apt-get install -y lib32stdc++6 lib32z1 \
 	&& apt-get install -y -t jessie-backports openjdk-8-jdk \
 	&& rm -rf /var/lib/apt/lists/*
-RUN echo 'y' | /opt/android-sdk/tools/bin/sdkmanager "build-tools;23.0.1"
-RUN echo 'y' | /opt/android-sdk/tools/bin/sdkmanager "platforms;android-23"
+RUN echo 'y' | /opt/android-sdk/tools/bin/sdkmanager "build-tools;27.0.3"
+RUN echo 'y' | /opt/android-sdk/tools/bin/sdkmanager "platforms;android-27"
 RUN echo 'y' | /opt/android-sdk/tools/bin/sdkmanager "platform-tools"
 RUN echo 'y' | /opt/android-sdk/tools/bin/sdkmanager "extras;android;m2repository"
 

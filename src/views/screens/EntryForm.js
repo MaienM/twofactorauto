@@ -7,7 +7,7 @@ import { Button, FormLabel, FormInput } from 'react-native-elements';
 import debouncedTouchable from '../../components/DebouncedTouchable';
 import FormInputPicker from '../../components/FormInputPicker';
 import * as buf from '../../utils/buffer';
-import { validate, resetValidation, isValid } from '../../utils/validate';
+import { validate, resetValidation, isValid } from '../../utils/formValidation';
 
 const DebouncedButton = debouncedTouchable(Button);
 

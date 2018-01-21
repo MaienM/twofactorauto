@@ -1,8 +1,7 @@
 import _ from 'lodash';
-import { getStoredState, createPersistor } from 'redux-persist';
-import { REHYDRATE } from 'redux-persist/constants';
-
-export { autoRehydrate } from 'redux-persist';
+import { persistReducer, persistStore } from 'redux-persist';
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
+import { REHYDRATE } from 'redux-persist';
 
 // Convert a storage class to a redux-persist compatible storage provider
 const handleCallback = (callback) => ([
@@ -16,36 +15,64 @@ export const toReduxPersistStorage = (sClass) => ({
 	removeItem: (key, callback) => sClass.remove(key).then(...handleCallback(callback)),
 });
 
-const getStoredStatePromise = (store, config) => new Promise((resolve, reject) => {
-	getStoredState(config, (error, state) => (error ? reject(error) : resolve(state)));
-});
-export const persistStore = (store, configs) => {
-	// Create a persistor for each of the configs
-	const persistors = _.map(configs, (c) => {
-		const persistor = createPersistor(store, c);
-		persistor.pause();
-		return persistor;
-	});
+/**
+ * A class that that handle multiple redux-persist stores with different settings/storage methods.
+ */
+export class MultiPersister {
+	/**
+	 * Create a new MultiPersister.
+	 *
+	 * @param {Object} config - The config of the MultiPersister. The keys are the reducer names, and the values the
+	 *   per-reducer configs.
+	 * @param {Object} config.example - The config for the reducer with name 'example'.
+	 * @param {Object} config.example.key - The key to use for this reducer. Default will be the name of the reducer
+	 *   ('example' in this case). Keys should be unique for the given storage method.
+	 * @param {Object} config.example.storage - The storage method to use for this reducer.
+	 */
+	constructor(config) {
+		this.config = _.mapValues(config, (c, key) => {
+			if (!c) {
+				return null;
+			}
+			if (!c.storage) {
+				throw new Error(`Invalid storage for ${key}`);
+			}
 
-	// Fetch data of all configs
-	return Promise.all(_.map(configs, (c) => (
-		getStoredStatePromise(store, c)
-			// Apply whitelist and blacklist
-			.then((state) => (c.whitelist ? _.pick(state, c.whitelist) : state))
-			.then((state) => (c.blacklist ? _.omit(state, c.blacklist) : state))
-	)))
-		.then((states) => {
-			// Dispatch a single rehydrate action
-			store.dispatch({
-				type: REHYDRATE,
-				payload: _.merge({}, ...states),
-			});
-
-			// Resume all persistors
-			_.each(persistors, (p) => p.resume());
-		})
-		.catch((errors) => {
-			throw new Error(errors);
+			return {
+				stateReconciler: autoMergeLevel2,
+				debug: true,
+				key,
+				...c,
+			};
 		});
-};
+	}
+
+	/**
+	 * Process all reducers to be persisted using the settings of this MultiPersister.
+	 *
+	 * This replaces persistCombineReducers of redux-persist.
+	 *
+	 * @params {Object} reducers - The key-value map of the reducers. The keys are the reducer names as used in the
+	 *   config given to the constructor, and the values are the reducers.
+	 * @return {Object} An object in the same format as the input, but with all reducers that should be persisted
+	 *   prepared for this.
+	 */
+	processReducers(reducers) {
+		return _.mapValues(reducers, (reducer, key) => {
+			const config = this.config[key];
+			return config ? persistReducer(config, reducer) : reducer;
+		});
+	}
+
+	/**
+	 * Start the persistence of the store.
+	 *
+	 * This replaces persistStore of redux-persist.
+	 *
+	 * @params {Object} store - The Redux store, using reducers processed by processReducers.
+	 */
+	async persistStore(store, ...args) {
+		return persistStore(store, ...args);
+	}
+}
 
