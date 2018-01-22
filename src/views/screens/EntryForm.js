@@ -7,7 +7,7 @@ import { Button, FormLabel, FormInput } from 'react-native-elements';
 import debouncedTouchable from '../../components/DebouncedTouchable';
 import FormInputPicker from '../../components/FormInputPicker';
 import * as buf from '../../utils/buffer';
-import { validate, resetValidation, isValid } from '../../utils/formValidation';
+import FormValidation from '../../components/FormValidation';
 
 const DebouncedButton = debouncedTouchable(Button);
 
@@ -68,7 +68,7 @@ export default class EntryForm extends React.Component {
 	}
 
 	render() {
-		resetValidation();
+		const validation = new FormValidation();
 		return (
 			<ScrollView style={styles.container}>
 				<FormLabel>Name</FormLabel>
@@ -78,7 +78,7 @@ export default class EntryForm extends React.Component {
 					placeholder="Name"
 					returnKeyType="next"
 				/>
-				{validate(!this.state.name && 'Cannot be empty')}
+				{validation.runValidation(!this.state.name && 'Cannot be empty')}
 
 				<FormLabel>Service</FormLabel>
 				<FormInput
@@ -87,7 +87,7 @@ export default class EntryForm extends React.Component {
 					placeholder="Service"
 					returnKeyType="next"
 				/>
-				{validate(!this.state.service && 'Cannot be empty')}
+				{validation.runValidation(!this.state.service && 'Cannot be empty')}
 
 				<FormLabel>Algorithm</FormLabel>
 				<FormInputPicker onValueChange={this.handleChangeAlgorithm} value={this.state.algorithm}>
@@ -95,7 +95,7 @@ export default class EntryForm extends React.Component {
 					<FormInputPicker.Item label="HOTP" value="hotp" />
 					<FormInputPicker.Item label="TOTP" value="totp" />
 				</FormInputPicker>
-				{validate(!this.state.algorithm && 'Cannot be empty')}
+				{validation.runValidation(!this.state.algorithm && 'Cannot be empty')}
 
 				<FormLabel>Secret (base64 encoded)</FormLabel>
 				<FormInput
@@ -103,7 +103,7 @@ export default class EntryForm extends React.Component {
 					value={this.state.secret}
 					placeholder="Secret"
 				/>
-				{validate(
+				{validation.runValidation(
 					!this.state.secret && 'Cannot be empty',
 					!buf.fromBase64(this.state.secret) && 'Must be a valid base64 encoded string',
 				)}
@@ -115,7 +115,7 @@ export default class EntryForm extends React.Component {
 					icon={{ name: 'save' }}
 					backgroundColor={COLORS.NEPHRITIS}
 					buttonStyle={styles.button}
-					disabled={!isValid()}
+					disabled={!validation.isValid()}
 					large
 				/>
 			</ScrollView>
