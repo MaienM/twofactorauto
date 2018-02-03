@@ -1,31 +1,44 @@
 import _ from 'lodash';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools as compose } from 'redux-devtools-extension/developmentOnly';
+import { persistCombineReducers, persistStore } from 'redux-persist';
+import asyncStorage from 'redux-persist/lib/storage';
+import createSensitiveStorage from 'redux-persist-sensitive-storage';
 import ReduxNavigator from './components/navigation/ReduxNavigator';
 import { actions } from './constants';
 import * as reducers from './reducers';
-import { MultiPersister } from './utils/persist';
-import storage from 'redux-persist/lib/storage';
+import { MultiStorage, LoggingStorage } from './utils/persist';
 
-// Process the reducers to be persisted with an appropriate store
-const TRANSIENT_STORES = ['navigation'];
-const SECURE_STORES = ['secrets'];
-const persistConfig = _.mapValues(reducers, (__, key) => {
-	if (_.includes(TRANSIENT_STORES, key)) {
-		return null;
-	} else if (_.includes(SECURE_STORES)) {
-		return { storage };
-	} else {
-		return { storage };
-	}
-});
-const persister = new MultiPersister(persistConfig);
-const processedReducers = persister.processReducers(reducers);
+// Create a storage for redux-persist that spreads the storage out over multiple storage backends
+const storage = new MultiStorage(
+	{
+		'normal': asyncStorage,
+		'sensitive': createSensitiveStorage(),
+	},
+	[
+		{
+			match: /navigation/,
+			storage: null,
+		},
+		{
+			match: /^secrets/,
+			storage: 'sensitive',
+		},
+		{
+			match: () => true,
+			storage: 'normal',
+		},
+	],
+);
 
 // Combine the reducers
-const appReducer = combineReducers(processedReducers);
+const persistConfig = {
+	key: 'primary',
+	storage: storage,
+};
+const appReducer = persistCombineReducers(persistConfig, reducers);
 const rootReducer = (state, action) => {
 	let appState = state;
 	if (action.type === actions.reset) {
@@ -45,7 +58,7 @@ const store = createStore(
 );
 
 // Start persistence
-persister.persistStore(store);
+persistStore(store);
 
 // Build the main component
 export default () => (
