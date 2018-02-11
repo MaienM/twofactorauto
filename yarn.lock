@@ -4553,10 +4553,6 @@ react-native-elements@^0.19.0:
     opencollective "^1.0.3"
     prop-types "^15.5.8"
 
-"react-native-keychain@github:oblador/react-native-keychain":
-  version "2.0.0"
-  resolved "https://codeload.github.com/oblador/react-native-keychain/tar.gz/06e0ea8678fe8842a19d56a6b40722ebf35354c3"
-
 react-native-material-dialog@^0.7.4:
   version "0.7.4"
   resolved "https://registry.yarnpkg.com/react-native-material-dialog/-/react-native-material-dialog-0.7.4.tgz#fa70861b08331a3dc320a1b9dd39f81cc9ca6df2"
@@ -4571,6 +4567,10 @@ react-native-randombytes@^2.2.0:
   dependencies:
     buffer "^4.9.1"
     sjcl "^1.0.3"
+
+"react-native-sensitive-info@github:mCodex/react-native-sensitive-info#keystore":
+  version "5.0.0"
+  resolved "https://codeload.github.com/mCodex/react-native-sensitive-info/tar.gz/f3be931d04fd82ec7794ea3705053d64e35d1b2c"
 
 react-native-swipeable@^0.6.0:
   version "0.6.0"
@@ -4765,6 +4765,10 @@ realpath-native@^1.0.0:
 redux-devtools-extension@^2.13.2:
   version "2.13.2"
   resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.2.tgz#e0f9a8e8dfca7c17be92c7124958a3b94eb2911d"
+
+redux-persist-sensitive-storage@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/redux-persist-sensitive-storage/-/redux-persist-sensitive-storage-1.0.0.tgz#19f5e5bd8ce4c4a4bc852eec61d18360abe07b66"
 
 redux-persist@^5.5.0:
   version "5.5.0"

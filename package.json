@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "test": "jest --watch",
+    "test": "jest",
+    "test-dev": "jest --watch",
+    "test-inspect": "node --inspect=9249 --inspect-brk ./node_modules/jest/bin/jest --watch",
     "lint": "eslint src",
     "android": "npm run android-run-dev && npm run android-dev",
     "android-run": "react-native run-android",
@@ -25,8 +27,8 @@
     "react": "16.2.0",
     "react-native": "0.52.0",
     "react-native-elements": "^0.19.0",
-    "react-native-keychain": "github:oblador/react-native-keychain",
     "react-native-material-dialog": "^0.7.4",
+    "react-native-sensitive-info": "github:mCodex/react-native-sensitive-info#keystore",
     "react-native-swipeable": "^0.6.0",
     "react-native-vector-icons": "^4.2.0",
     "react-navigation": "^1.0.0-beta.27",
@@ -34,6 +36,7 @@
     "redux": "^3.7.1",
     "redux-devtools-extension": "^2.13.2",
     "redux-persist": "^5.5.0",
+    "redux-persist-sensitive-storage": "^1.0.0",
     "uuid": "^3.1.0",
     "vm": "^0.1.0"
   },
