@@ -7,7 +7,7 @@ RUN unzip sdk-tools-linux-3859397.zip -d /opt/android-sdk
 
 ################################################################################
 
-FROM node:boron
+FROM node:latest
 MAINTAINER Michon van Dooren <michon1992@gmail.com>
 
 COPY --from=build /opt/android-sdk /opt/android-sdk
