@@ -4,8 +4,8 @@ import { back } from '../../actions/navigation';
 import EntryForm from './EntryForm';
 
 const mapDispatchToProps = (dispatch) => ({
-	onSave: ({ entry, secrets }) => {
-		dispatch(createEntry({ entry, secrets }));
+	onSave: (entry) => {
+		dispatch(createEntry({ entry }));
 		dispatch(back());
 	},
 });

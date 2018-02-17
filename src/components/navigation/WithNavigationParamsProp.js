@@ -10,7 +10,7 @@ export default (Component) => {
 	setupHOC(Component, withNavigationParamsProp);
 
 	const mapStateToProps = (state) => ({
-		params: state.navigation.navigator.routes[state.navigation.navigator.index].params,
+		params: state.navigation.navigator.routes[state.navigation.navigator.index].params || {},
 	});
 
 	return connect(mapStateToProps)(withNavigationParamsProp);

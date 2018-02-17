@@ -9,7 +9,7 @@ import createSensitiveStorage from 'redux-persist-sensitive-storage';
 import ReduxNavigator from './components/navigation/ReduxNavigator';
 import { actions } from './constants';
 import * as reducers from './reducers';
-import { MultiStorage, LoggingStorage } from './utils/persist';
+import { MultiStorage } from './utils/persist';
 
 // Create a storage for redux-persist that spreads the storage out over multiple storage backends
 const storage = new MultiStorage(
@@ -19,11 +19,11 @@ const storage = new MultiStorage(
 	},
 	[
 		{
-			match: /navigation/,
+			match: /^navigation/,
 			storage: null,
 		},
 		{
-			match: /^secrets/,
+			match: /^entries\.[^.]*\.secrets/,
 			storage: 'sensitive',
 		},
 		{

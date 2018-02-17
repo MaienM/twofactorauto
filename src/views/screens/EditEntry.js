@@ -4,16 +4,14 @@ import { back } from '../../actions/navigation';
 import EntryForm from './EntryForm';
 
 const mapStateToProps = (state, ownProps) => ({
-	entry: state.entries[ownProps.uuid],
-	secrets: state.secrets[ownProps.uuid],
+	entry: state.entries[ownProps.params.uuid],
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-	onSave: ({ entry, secrets }) => {
+	onSave: (entry) => {
 		dispatch(updateEntry({
-			uuid: ownProps.uuid,
+			uuid: ownProps.params.uuid,
 			entry,
-			secrets,
 		}));
 		dispatch(back());
 	},

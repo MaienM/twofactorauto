@@ -2,23 +2,19 @@ import _ from 'lodash';
 import uuidGen from 'uuid/v4';
 import { actions } from '../constants';
 
-export const createEntry = ({ uuid = uuidGen(), entry, secrets }) => {
+export const createEntry = ({ uuid = uuidGen(), entry }) => {
 	if (!_.isObject(entry)) {
 		throw new Error(`Invalid entry ${entry}`);
-	}
-	if (!_.isObject(secrets)) {
-		throw new Error(`Invalid secrets ${secrets}`);
 	}
 
 	return {
 		type: actions.entry.create,
 		uuid,
 		entry,
-		secrets,
 	};
 };
 
-export const updateEntry = ({ uuid, entry, secrets }) => {
+export const updateEntry = ({ uuid, entry }) => {
 	if (!uuid) {
 		throw new Error(`Invalid uuid ${uuid}`);
 	}
@@ -27,7 +23,6 @@ export const updateEntry = ({ uuid, entry, secrets }) => {
 		type: actions.entry.update,
 		uuid,
 		entry,
-		secrets,
 	};
 };
 

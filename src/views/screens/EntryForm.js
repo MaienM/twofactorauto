@@ -7,6 +7,7 @@ import { Button, FormLabel, FormInput } from 'react-native-elements';
 import debouncedTouchable from '../../components/DebouncedTouchable';
 import FormInputPicker from '../../components/FormInputPicker';
 import * as buf from '../../utils/buffer';
+import { entry as propTypeEntry } from '../../utils/propTypes';
 import FormValidation from '../../components/FormValidation';
 
 const DebouncedButton = debouncedTouchable(Button);
@@ -25,10 +26,10 @@ export default class EntryForm extends React.Component {
 		super(props);
 
 		this.state = {
-			name: _.get(props, 'entry.name', ''),
-			service: _.get(props, 'entry.service', ''),
-			algorithm: _.get(props, 'entry.algorithm', null),
-			secret: _.get(props, 'secrets.secret', ''),
+			name: _.get(props.entry, 'name', ''),
+			service: _.get(props.entry, 'service', ''),
+			algorithm: _.get(props.entry, 'algorithm', null),
+			secret: _.get(props.entry, 'secrets.secret', ''),
 		};
 
 		this.handleChangeName = this.handleChangeName.bind(this);
@@ -56,11 +57,9 @@ export default class EntryForm extends React.Component {
 
 	handlePressSave() {
 		this.props.onSave({
-			entry: {
-				name: this.state.name,
-				service: this.state.service,
-				algorithm: this.state.algorithm,
-			},
+			name: this.state.name,
+			service: this.state.service,
+			algorithm: this.state.algorithm,
 			secrets: {
 				secret: this.state.secret,
 			},
@@ -125,5 +124,6 @@ export default class EntryForm extends React.Component {
 
 EntryForm.propTypes = {
 	onSave: PropTypes.func.isRequired,
+	entry: propTypeEntry,
 };
 

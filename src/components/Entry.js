@@ -10,6 +10,7 @@ import { updateEntry } from '../actions/entries';
 import algorithms from '../algorithms';
 import debouncedTouchable from '../components/DebouncedTouchable';
 import { getComplementary } from '../utils/colors';
+import { entry as propTypeEntry } from '../utils/propTypes';
 import CountdownCircle from './CountdownCircle';
 
 const DebouncedTouchableHighlight = debouncedTouchable(TouchableHighlight);
@@ -119,11 +120,14 @@ class Entry extends React.Component {
 
 	onPress() {
 		const Algorithm = algorithms[this.props.entry.algorithm.toLowerCase()];
-		const algorithm = new Algorithm(this.props.secrets);
+		const algorithm = new Algorithm(this.props.entry.secrets);
 		this.setState({
 			code: algorithm.generate(),
 		});
-		this.props.onUpdateSecrets(algorithm.persist());
+		this.props.onUpdate({
+			...this.props.entry,
+			secrets: algorithm.persist(),
+		});
 	}
 
 	handleTimeElapsed() {
@@ -175,27 +179,21 @@ class Entry extends React.Component {
 }
 
 Entry.propTypes = {
-	uuid: PropTypes.string.isRequired, // eslint-disable-line
-	entry: PropTypes.shape({
-		name: PropTypes.string.isRequired,
-		service: PropTypes.string.isRequired,
-		algorithm: PropTypes.oneOf(_.keys(algorithms)).isRequired,
-	}).isRequired,
-	secrets: PropTypes.object.isRequired, // eslint-disable-line
-	onUpdateSecrets: PropTypes.func.isRequired,
+	uuid: PropTypes.string.isRequired,
+	entry: propTypeEntry.isRequired,
+	onUpdate: PropTypes.func.isRequired,
 	onPressEdit: PropTypes.func.isRequired,
 	onPressDelete: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
 	entry: state.entries[ownProps.uuid],
-	secrets: state.secrets[ownProps.uuid],
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-	onUpdateSecrets: (secrets) => dispatch(updateEntry({
+	onUpdate: (entry) => dispatch(updateEntry({
 		uuid: ownProps.uuid,
-		secrets,
+		entry,
 	})),
 });
 
